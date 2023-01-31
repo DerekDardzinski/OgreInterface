@@ -1,0 +1,1450 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../miller/">
+      
+      
+        <link rel="next" href="../lattice_match/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.9">
+    
+    
+      
+        <title>Utils - OgreInterface Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.0d440cfe.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#utilspy" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OgreInterface Documentation" class="md-header__button md-logo" aria-label="OgreInterface Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OgreInterface Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Utils
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OgreInterface Documentation" class="md-nav__button md-logo" aria-label="OgreInterface Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    OgreInterface Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generate/" class="md-nav__link">
+        Generators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../surfaces/" class="md-nav__link">
+        Surfaces
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miller/" class="md-nav__link">
+        Miller Index Scan
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Utils
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Utils
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#utilspy" class="md-nav__link">
+    utils.py
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#OgreInterface.utils" class="md-nav__link">
+    OgreInterface.utils
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#OgreInterface.utils.get_primitive_structure" class="md-nav__link">
+    get_primitive_structure()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#OgreInterface.utils.get_reduced_basis" class="md-nav__link">
+    get_reduced_basis()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#OgreInterface.utils.group_layers" class="md-nav__link">
+    group_layers()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lattice_match/" class="md-nav__link">
+        Zur and McGill Algorithm
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+          Surface Matching
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          Surface Matching
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../surface_match/ionic_surface_matcher/" class="md-nav__link">
+        Ionic surface matcher
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../surface_match/sphere_surface_matcher/" class="md-nav__link">
+        Sphere surface matcher
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="0">
+          Score Function
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_7">
+          <span class="md-nav__icon md-icon"></span>
+          Score Function
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../score_function/born/" class="md-nav__link">
+        Born
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../score_function/ewald/" class="md-nav__link">
+        Ewald
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../score_function/overlap/" class="md-nav__link">
+        Overlap
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#utilspy" class="md-nav__link">
+    utils.py
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#OgreInterface.utils" class="md-nav__link">
+    OgreInterface.utils
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#OgreInterface.utils.get_primitive_structure" class="md-nav__link">
+    get_primitive_structure()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#OgreInterface.utils.get_reduced_basis" class="md-nav__link">
+    get_reduced_basis()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#OgreInterface.utils.group_layers" class="md-nav__link">
+    group_layers()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Utils</h1>
+
+<h2 id="utilspy">utils.py</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+<a id="OgreInterface.utils"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="OgreInterface.utils.get_primitive_structure" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_primitive_structure</span><span class="p">(</span><span class="n">struc</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">use_site_props</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">constrain_latt</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This finds a smaller unit cell than the input. Sometimes it doesn"t
+find the smallest possible one, so this method is recursively called
+until it is unable to find a smaller cell.</p>
+<p>NOTE: if the tolerance is greater than 1/2 the minimum inter-site
+distance in the primitive cell, the algorithm will reject this lattice.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>tolerance</code></td>
+          <td>
+                <code>float), Angstroms</code>
+          </td>
+          <td><p>Tolerance for each coordinate of a
+particular site. For example, [0.1, 0, 0.1] in cartesian
+coordinates will be considered to be on the same coordinates
+as [0, 0, 0] for a tolerance of 0.25. Defaults to 0.25.</p></td>
+          <td>
+                <code>0.25</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>use_site_props</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>Whether to account for site properties in
+differentiating sites.</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>constrain_latt</code></td>
+          <td>
+                <code>list/dict</code>
+          </td>
+          <td><p>List of lattice parameters we want to
+preserve, e.g. ["alpha", "c"] or dict with the lattice
+parameter names as keys and values we want the parameters to
+be e.g. {"alpha": 90, "c": 2.5}.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>The most primitive structure found.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>OgreInterface/utils.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_primitive_structure</span><span class="p">(</span>
+    <span class="n">struc</span><span class="p">,</span>
+    <span class="n">tolerance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">use_site_props</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">constrain_latt</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This finds a smaller unit cell than the input. Sometimes it doesn&quot;t</span>
+<span class="sd">    find the smallest possible one, so this method is recursively called</span>
+<span class="sd">    until it is unable to find a smaller cell.</span>
+
+<span class="sd">    NOTE: if the tolerance is greater than 1/2 the minimum inter-site</span>
+<span class="sd">    distance in the primitive cell, the algorithm will reject this lattice.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tolerance (float), Angstroms: Tolerance for each coordinate of a</span>
+<span class="sd">            particular site. For example, [0.1, 0, 0.1] in cartesian</span>
+<span class="sd">            coordinates will be considered to be on the same coordinates</span>
+<span class="sd">            as [0, 0, 0] for a tolerance of 0.25. Defaults to 0.25.</span>
+<span class="sd">        use_site_props (bool): Whether to account for site properties in</span>
+<span class="sd">            differentiating sites.</span>
+<span class="sd">        constrain_latt (list/dict): List of lattice parameters we want to</span>
+<span class="sd">            preserve, e.g. [&quot;alpha&quot;, &quot;c&quot;] or dict with the lattice</span>
+<span class="sd">            parameter names as keys and values we want the parameters to</span>
+<span class="sd">            be e.g. {&quot;alpha&quot;: 90, &quot;c&quot;: 2.5}.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The most primitive structure found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">constrain_latt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">constrain_latt</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">site_label</span><span class="p">(</span><span class="n">site</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">use_site_props</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">site</span><span class="o">.</span><span class="n">species_string</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="n">site</span><span class="o">.</span><span class="n">species_string</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="c1"># group sites by species string</span>
+    <span class="n">sites</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">struc</span><span class="o">.</span><span class="n">_sites</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">site_label</span><span class="p">)</span>
+
+    <span class="n">grouped_sites</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">sites</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">site_label</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">grouped_fcoords</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">s</span><span class="o">.</span><span class="n">frac_coords</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">g</span><span class="p">])</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">grouped_sites</span>
+    <span class="p">]</span>
+
+    <span class="c1"># min_vecs are approximate periodicities of the cell. The exact</span>
+    <span class="c1"># periodicities from the supercell matrices are checked against these</span>
+    <span class="c1"># first</span>
+    <span class="n">min_fcoords</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">grouped_fcoords</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">min_vecs</span> <span class="o">=</span> <span class="n">min_fcoords</span> <span class="o">-</span> <span class="n">min_fcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># fractional tolerance in the supercell</span>
+    <span class="n">super_ftol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">tolerance</span><span class="p">,</span> <span class="n">struc</span><span class="o">.</span><span class="n">lattice</span><span class="o">.</span><span class="n">abc</span><span class="p">)</span>
+    <span class="n">super_ftol_2</span> <span class="o">=</span> <span class="n">super_ftol</span> <span class="o">*</span> <span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">pbc_coord_intersection</span><span class="p">(</span><span class="n">fc1</span><span class="p">,</span> <span class="n">fc2</span><span class="p">,</span> <span class="n">tol</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the fractional coords in fc1 that have coordinates</span>
+<span class="sd">        within tolerance to some coordinate in fc2</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">fc1</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">fc2</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">d</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fc1</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">d</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)]</span>
+
+    <span class="c1"># here we reduce the number of min_vecs by enforcing that every</span>
+    <span class="c1"># vector in min_vecs approximately maps each site onto a similar site.</span>
+    <span class="c1"># The subsequent processing is O(fu^3 * min_vecs) = O(n^4) if we do no</span>
+    <span class="c1"># reduction.</span>
+    <span class="c1"># This reduction is O(n^3) so usually is an improvement. Using double</span>
+    <span class="c1"># the tolerance because both vectors are approximate</span>
+    <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">grouped_fcoords</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
+            <span class="n">min_vecs</span> <span class="o">=</span> <span class="n">pbc_coord_intersection</span><span class="p">(</span><span class="n">min_vecs</span><span class="p">,</span> <span class="n">g</span> <span class="o">-</span> <span class="n">f</span><span class="p">,</span> <span class="n">super_ftol_2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_hnf</span><span class="p">(</span><span class="n">fu</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns all possible distinct supercell matrices given a</span>
+<span class="sd">        number of formula units in the supercell. Batches the matrices</span>
+<span class="sd">        by the values in the diagonal (for less numpy overhead).</span>
+<span class="sd">        Computational complexity is O(n^3), and difficult to improve.</span>
+<span class="sd">        Might be able to do something smart with checking combinations of a</span>
+<span class="sd">        and b first, though unlikely to reduce to O(n^2).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">factors</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">i</span>
+
+        <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">factors</span><span class="p">(</span><span class="n">fu</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">det</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">factors</span><span class="p">(</span><span class="n">det</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">factors</span><span class="p">(</span><span class="n">det</span> <span class="o">//</span> <span class="n">a</span><span class="p">):</span>
+                    <span class="n">g</span> <span class="o">=</span> <span class="n">det</span> <span class="o">//</span> <span class="n">a</span> <span class="o">//</span> <span class="n">e</span>
+                    <span class="k">yield</span> <span class="n">det</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                        <span class="p">[</span>
+                            <span class="p">[[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">g</span><span class="p">]]</span>
+                            <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span>
+                                <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">]</span>
+                    <span class="p">)</span>
+
+    <span class="c1"># we can&#39;t let sites match to their neighbors in the supercell</span>
+    <span class="n">grouped_non_nbrs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">gfcoords</span> <span class="ow">in</span> <span class="n">grouped_fcoords</span><span class="p">:</span>
+        <span class="n">fdist</span> <span class="o">=</span> <span class="n">gfcoords</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">gfcoords</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">fdist</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fdist</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fdist</span><span class="p">,</span> <span class="n">fdist</span><span class="p">)</span>
+        <span class="n">non_nbrs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">fdist</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">super_ftol</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># since we want sites to match to themselves</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">non_nbrs</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">grouped_non_nbrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">non_nbrs</span><span class="p">)</span>
+
+    <span class="n">num_fu</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">gcd</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">grouped_sites</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">size</span><span class="p">,</span> <span class="n">ms</span> <span class="ow">in</span> <span class="n">get_hnf</span><span class="p">(</span><span class="n">num_fu</span><span class="p">):</span>
+        <span class="n">inv_ms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">ms</span><span class="p">)</span>
+
+        <span class="c1"># find sets of lattice vectors that are are present in min_vecs</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">inv_ms</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">min_vecs</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">dist</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
+        <span class="n">is_close</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">dist</span> <span class="o">&lt;</span> <span class="n">super_ftol</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">any_close</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">is_close</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">any_close</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">inv_m</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">inv_ms</span><span class="p">[</span><span class="n">inds</span><span class="p">],</span> <span class="n">ms</span><span class="p">[</span><span class="n">inds</span><span class="p">]):</span>
+            <span class="n">new_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inv_m</span><span class="p">,</span> <span class="n">struc</span><span class="o">.</span><span class="n">lattice</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
+            <span class="n">ftol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">tolerance</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">new_m</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+
+            <span class="n">valid</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">new_coords</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">new_sp</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">new_props</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">gsites</span><span class="p">,</span> <span class="n">gfcoords</span><span class="p">,</span> <span class="n">non_nbrs</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+                <span class="n">grouped_sites</span><span class="p">,</span> <span class="n">grouped_fcoords</span><span class="p">,</span> <span class="n">grouped_non_nbrs</span>
+            <span class="p">):</span>
+                <span class="n">all_frac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">gfcoords</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+
+                <span class="c1"># calculate grouping of equivalent sites, represented by</span>
+                <span class="c1"># adjacency matrix</span>
+                <span class="n">fdist</span> <span class="o">=</span> <span class="n">all_frac</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">all_frac</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="n">fdist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fdist</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fdist</span><span class="p">))</span>
+                <span class="n">close_in_prim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">fdist</span> <span class="o">&lt;</span> <span class="n">ftol</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">groups</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">close_in_prim</span><span class="p">,</span> <span class="n">non_nbrs</span><span class="p">)</span>
+
+                <span class="c1"># check that groups are correct</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">groups</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="n">size</span><span class="p">):</span>
+                    <span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">break</span>
+
+                <span class="c1"># check that groups are all cliques</span>
+                <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">groups</span><span class="p">[</span><span class="n">g</span><span class="p">][:,</span> <span class="n">g</span><span class="p">]):</span>
+                        <span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+                <span class="c1"># add the new sites, averaging positions</span>
+                <span class="n">added</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gsites</span><span class="p">))</span>
+                <span class="n">new_fcoords</span> <span class="o">=</span> <span class="n">all_frac</span> <span class="o">%</span> <span class="mi">1</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">groups</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">added</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                        <span class="n">added</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">group</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">coords</span> <span class="o">=</span> <span class="n">new_fcoords</span><span class="p">[</span><span class="n">inds</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                        <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">inds</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+                            <span class="n">offset</span> <span class="o">=</span> <span class="n">new_fcoords</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">coords</span>
+                            <span class="n">coords</span> <span class="o">+=</span> <span class="p">(</span><span class="n">offset</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">offset</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+                        <span class="n">new_sp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gsites</span><span class="p">[</span><span class="n">inds</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">species</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">gsites</span><span class="p">[</span><span class="n">inds</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+                            <span class="n">new_props</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gsites</span><span class="p">[</span><span class="n">inds</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+                        <span class="n">new_coords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">valid</span><span class="p">:</span>
+                <span class="n">inv_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+                <span class="n">new_l</span> <span class="o">=</span> <span class="n">Lattice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inv_m</span><span class="p">,</span> <span class="n">struc</span><span class="o">.</span><span class="n">lattice</span><span class="o">.</span><span class="n">matrix</span><span class="p">))</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span>
+                    <span class="n">new_l</span><span class="p">,</span>
+                    <span class="n">new_sp</span><span class="p">,</span>
+                    <span class="n">new_coords</span><span class="p">,</span>
+                    <span class="n">site_properties</span><span class="o">=</span><span class="n">new_props</span><span class="p">,</span>
+                    <span class="n">coords_are_cartesian</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="n">p</span> <span class="o">=</span> <span class="n">get_primitive_structure</span><span class="p">(</span>
+                    <span class="n">s</span><span class="p">,</span>
+                    <span class="n">tolerance</span><span class="o">=</span><span class="n">tolerance</span><span class="p">,</span>
+                    <span class="n">use_site_props</span><span class="o">=</span><span class="n">use_site_props</span><span class="p">,</span>
+                    <span class="n">constrain_latt</span><span class="o">=</span><span class="n">constrain_latt</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">constrain_latt</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">p</span>
+
+                <span class="c1"># Only return primitive structures that</span>
+                <span class="c1"># satisfy the restriction condition</span>
+                <span class="n">p_latt</span><span class="p">,</span> <span class="n">s_latt</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">lattice</span><span class="p">,</span> <span class="n">struc</span><span class="o">.</span><span class="n">lattice</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">constrain_latt</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;list&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span>
+                        <span class="nb">getattr</span><span class="p">(</span><span class="n">p_latt</span><span class="p">,</span> <span class="n">pp</span><span class="p">)</span> <span class="o">==</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">s_latt</span><span class="p">,</span> <span class="n">pp</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">pp</span> <span class="ow">in</span> <span class="n">constrain_latt</span>
+                    <span class="p">):</span>
+                        <span class="k">return</span> <span class="n">p</span>
+                <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">constrain_latt</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;dict&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span>
+                        <span class="nb">getattr</span><span class="p">(</span><span class="n">p_latt</span><span class="p">,</span> <span class="n">pp</span><span class="p">)</span> <span class="o">==</span> <span class="n">constrain_latt</span><span class="p">[</span><span class="n">pp</span><span class="p">]</span> <span class="k">for</span> <span class="n">pp</span> <span class="ow">in</span> <span class="n">constrain_latt</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
+                    <span class="p">):</span>
+                        <span class="k">return</span> <span class="n">p</span>
+
+    <span class="k">return</span> <span class="n">struc</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="OgreInterface.utils.get_reduced_basis" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_reduced_basis</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function is used to find the miller indices of the slab structure
+basis vectors in their most reduced form. i.e.</p>
+<p>|  2  4  0 |     | 1  2  0 |
+|  0 -2  4 | ==&gt; | 0 -1  2 |
+| 10 10 10 |     | 1  1  1 |</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>basis</code></td>
+          <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
+          </td>
+          <td><p>3x3 matrix defining the lattice vectors</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
+          </td>
+          <td><p>Reduced integer basis in the form of miller indices</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>OgreInterface/utils.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_reduced_basis</span><span class="p">(</span><span class="n">basis</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function is used to find the miller indices of the slab structure</span>
+<span class="sd">    basis vectors in their most reduced form. i.e.</span>
+
+<span class="sd">    |  2  4  0 |     | 1  2  0 |</span>
+<span class="sd">    |  0 -2  4 | ==&gt; | 0 -1  2 |</span>
+<span class="sd">    | 10 10 10 |     | 1  1  1 |</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        basis (np.ndarray): 3x3 matrix defining the lattice vectors</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Reduced integer basis in the form of miller indices</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">basis</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">basis</span><span class="p">):</span>
+        <span class="n">basis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_get_reduced_vector</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">basis</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="OgreInterface.utils.group_layers" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">group_layers</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function will find the atom indices belonging to each unique atomic layer.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>structure</code></td>
+          <td>
+                <code>pymatgen.<span title="pymatgen.core">core</span>.<span title="pymatgen.core.structure">structure</span>.<span title="pymatgen.core.structure.Structure">Structure</span></code>
+          </td>
+          <td><p>Slab structure</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>atol</code></td>
+          <td>
+                <code>float or None</code>
+          </td>
+          <td><p>Tolarence used for grouping the layers. Useful for grouping
+layers in a structure with relaxed atomic positions.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>A list containing the indices of each layers.</p></td>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td><p>A list of heights of each layers in fractional coordinates.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>OgreInterface/utils.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">group_layers</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will find the atom indices belonging to each unique atomic layer.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        structure (pymatgen.core.structure.Structure): Slab structure</span>
+<span class="sd">        atol (float or None): Tolarence used for grouping the layers. Useful for grouping</span>
+<span class="sd">            layers in a structure with relaxed atomic positions.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list containing the indices of each layers.</span>
+<span class="sd">        A list of heights of each layers in fractional coordinates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sites</span> <span class="o">=</span> <span class="n">structure</span><span class="o">.</span><span class="n">sites</span>
+    <span class="n">zvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">site</span><span class="o">.</span><span class="n">c</span> <span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">sites</span><span class="p">])</span>
+    <span class="n">unique_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">zvals</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">unique_values</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.2</span>
+
+    <span class="n">grouped</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">group_heights</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">zvals_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">zvals</span><span class="p">)</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">grouped</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">zvals_copy</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">atol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">group_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">zvals</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">zvals_copy</span><span class="p">),</span> <span class="n">atol</span><span class="o">=</span><span class="n">diff</span><span class="p">)</span>
+                <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">group_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">zvals</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">zvals_copy</span><span class="p">),</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
+                <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">group_heights</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">zvals_copy</span><span class="p">))</span>
+            <span class="n">zvals_copy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span>
+                <span class="n">zvals_copy</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">zvals_copy</span><span class="p">,</span> <span class="n">zvals</span><span class="p">[</span><span class="n">group_index</span><span class="p">]))[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group_index</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">grouped</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">groups</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">group_heights</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a00a7c5e.min.js"></script>
+      
+    
+  </body>
+</html>
