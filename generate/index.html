@@ -711,7 +711,7 @@ commensurate interface structures between two inorganic crystalline materials.</
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">OgreInterface.generate</span> <span class="kn">import</span> <span class="n">SurfaceGenerator</span><span class="p">,</span> <span class="n">InterfaceGenerator</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">subs</span> <span class="o">=</span> <span class="n">SurfaceGenerator</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;POSCAR_sub&quot;</span><span class="p">,</span> <span class="n">miller_index</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">layers</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">films</span> <span class="o">=</span> <span class="n">SurfaceGenerator</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;POSCAR_film&quot;</span><span class="p">,</span> <span class="n">miller_index</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">layers</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">interface_generator</span> <span class="o">=</span> <span class="n">InterfaceGenerator</span><span class="p">(</span><span class="n">substrate</span><span class="o">=</span><span class="n">subs</span><span class="o">.</span><span class="n">slabs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">film</span><span class="o">=</span><span class="n">films</span><span class="o">.</span><span class="n">slabs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">area_tol</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">angle_tol</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">length_tol</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">max_area</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">interface_generator</span> <span class="o">=</span> <span class="n">InterfaceGenerator</span><span class="p">(</span><span class="n">substrate</span><span class="o">=</span><span class="n">subs</span><span class="o">.</span><span class="n">slabs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">film</span><span class="o">=</span><span class="n">films</span><span class="o">.</span><span class="n">slabs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">interfaces</span> <span class="o">=</span> <span class="n">interface_generator</span><span class="o">.</span><span class="n">generate_interfaces</span><span class="p">()</span> <span class="c1"># List of OgreInterface Interface objects</span>
 </code></pre></div>
 
@@ -747,7 +747,7 @@ commensurate interface structures between two inorganic crystalline materials.</
           </td>
         </tr>
         <tr>
-          <td><code>area_tol</code></td>
+          <td><code>max_area_mismatch</code></td>
           <td>
                 <code>float</code>
           </td>
@@ -757,7 +757,7 @@ commensurate interface structures between two inorganic crystalline materials.</
           </td>
         </tr>
         <tr>
-          <td><code>angle_tol</code></td>
+          <td><code>max_angle_strain</code></td>
           <td>
                 <code>float</code>
           </td>
@@ -767,7 +767,7 @@ commensurate interface structures between two inorganic crystalline materials.</
           </td>
         </tr>
         <tr>
-          <td><code>length_tol</code></td>
+          <td><code>max_linear_strain</code></td>
           <td>
                 <code>float</code>
           </td>
@@ -846,21 +846,21 @@ spacing between the film and substrate materials.</p></td>
           <td><p>Surface class of the film materials</p></td>
         </tr>
         <tr>
-          <td><code>area_tol</code></td>
+          <td><code>max_area_mismatch</code></td>
           <td>
                 <code>float</code>
           </td>
           <td><p>Tolarance of the area mismatch (eq. 2.1 in Zur and McGill)</p></td>
         </tr>
         <tr>
-          <td><code>angle_tol</code></td>
+          <td><code>max_angle_strain</code></td>
           <td>
                 <code>float</code>
           </td>
           <td><p>Tolarence of the angle mismatch between the film and substrate lattice vectors</p></td>
         </tr>
         <tr>
-          <td><code>length_tol</code></td>
+          <td><code>max_linear_strain</code></td>
           <td>
                 <code>float</code>
           </td>
@@ -1176,15 +1176,15 @@ spacing between the film and substrate materials.</p></td>
 <span class="sd">        &gt;&gt;&gt; from OgreInterface.generate import SurfaceGenerator, InterfaceGenerator</span>
 <span class="sd">        &gt;&gt;&gt; subs = SurfaceGenerator.from_file(filename=&quot;POSCAR_sub&quot;, miller_index=[1,1,1], layers=5)</span>
 <span class="sd">        &gt;&gt;&gt; films = SurfaceGenerator.from_file(filename=&quot;POSCAR_film&quot;, miller_index=[1,1,1], layers=5)</span>
-<span class="sd">        &gt;&gt;&gt; interface_generator = InterfaceGenerator(substrate=subs.slabs[0], film=films.slabs[0], area_tol=0.01, angle_tol=0.01, length_tol=0.01, max_area=500)</span>
+<span class="sd">        &gt;&gt;&gt; interface_generator = InterfaceGenerator(substrate=subs.slabs[0], film=films.slabs[0])</span>
 <span class="sd">        &gt;&gt;&gt; interfaces = interface_generator.generate_interfaces() # List of OgreInterface Interface objects</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        substrate: Surface class of the substrate material</span>
 <span class="sd">        film: Surface class of the film materials</span>
-<span class="sd">        area_tol: Tolarance of the area mismatch (eq. 2.1 in Zur and McGill)</span>
-<span class="sd">        angle_tol: Tolarence of the angle mismatch between the film and substrate lattice vectors</span>
-<span class="sd">        length_tol: Tolarence of the length mismatch between the film and substrate lattice vectors</span>
+<span class="sd">        max_area_mismatch: Tolarance of the area mismatch (eq. 2.1 in Zur and McGill)</span>
+<span class="sd">        max_angle_strain: Tolarence of the angle mismatch between the film and substrate lattice vectors</span>
+<span class="sd">        max_linear_strain: Tolarence of the length mismatch between the film and substrate lattice vectors</span>
 <span class="sd">        max_area: Maximum area of the interface unit cell cross section</span>
 <span class="sd">        interfacial_distance: Distance between the top atom in the substrate to the bottom atom of the film</span>
 <span class="sd">            If None, the interfacial distance will be predicted based on the average distance of the interlayer</span>
@@ -1195,9 +1195,9 @@ spacing between the film and substrate materials.</p></td>
 <span class="sd">    Attributes:</span>
 <span class="sd">        substrate (Surface): Surface class of the substrate material</span>
 <span class="sd">        film (Surface): Surface class of the film materials</span>
-<span class="sd">        area_tol (float): Tolarance of the area mismatch (eq. 2.1 in Zur and McGill)</span>
-<span class="sd">        angle_tol (float): Tolarence of the angle mismatch between the film and substrate lattice vectors</span>
-<span class="sd">        length_tol (float): Tolarence of the length mismatch between the film and substrate lattice vectors</span>
+<span class="sd">        max_area_mismatch (float): Tolarance of the area mismatch (eq. 2.1 in Zur and McGill)</span>
+<span class="sd">        max_angle_strain (float): Tolarence of the angle mismatch between the film and substrate lattice vectors</span>
+<span class="sd">        max_linear_strain (float): Tolarence of the length mismatch between the film and substrate lattice vectors</span>
 <span class="sd">        max_area (float): Maximum area of the interface unit cell cross section</span>
 <span class="sd">        interfacial_distance (Union[float, None]): Distance between the top atom in the substrate to the bottom atom of the film</span>
 <span class="sd">            If None, the interfacial distance will be predicted based on the average distance of the interlayer</span>
@@ -1211,9 +1211,9 @@ spacing between the film and substrate materials.</p></td>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">substrate</span><span class="p">:</span> <span class="n">Surface</span><span class="p">,</span>
         <span class="n">film</span><span class="p">:</span> <span class="n">Surface</span><span class="p">,</span>
-        <span class="n">area_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
-        <span class="n">angle_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
-        <span class="n">length_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">max_area_mismatch</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">max_angle_strain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">max_linear_strain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
         <span class="n">max_area</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">500.0</span><span class="p">,</span>
         <span class="n">interfacial_distance</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
         <span class="n">vacuum</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">40.0</span><span class="p">,</span>
@@ -1234,9 +1234,9 @@ spacing between the film and substrate materials.</p></td>
             <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">center</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">area_tol</span> <span class="o">=</span> <span class="n">area_tol</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">angle_tol</span> <span class="o">=</span> <span class="n">angle_tol</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">length_tol</span> <span class="o">=</span> <span class="n">length_tol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_area_mismatch</span> <span class="o">=</span> <span class="n">max_area_mismatch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_angle_strain</span> <span class="o">=</span> <span class="n">max_angle_strain</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_linear_strain</span> <span class="o">=</span> <span class="n">max_linear_strain</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_area</span> <span class="o">=</span> <span class="n">max_area</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interfacial_distance</span> <span class="o">=</span> <span class="n">interfacial_distance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span> <span class="o">=</span> <span class="n">vacuum</span>
@@ -1249,9 +1249,9 @@ spacing between the film and substrate materials.</p></td>
             <span class="n">film_basis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">film</span><span class="o">.</span><span class="n">uvw_basis</span><span class="p">,</span>
             <span class="n">substrate_basis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">uvw_basis</span><span class="p">,</span>
             <span class="n">max_area</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_area</span><span class="p">,</span>
-            <span class="n">max_linear_strain</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">length_tol</span><span class="p">,</span>
-            <span class="n">max_angle_strain</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">angle_tol</span><span class="p">,</span>
-            <span class="n">max_area_mismatch</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">area_tol</span><span class="p">,</span>
+            <span class="n">max_linear_strain</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_linear_strain</span><span class="p">,</span>
+            <span class="n">max_angle_strain</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_angle_strain</span><span class="p">,</span>
+            <span class="n">max_area_mismatch</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_area_mismatch</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">match_list</span> <span class="o">=</span> <span class="n">zm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">return_all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
