@@ -1071,97 +1071,21 @@ and it should be create exclusively using the SurfaceGenerator.</p>
           </td>
           <td><p>Determines if the interface is centered in the vacuum</p></td>
         </tr>
-        <tr>
-          <td><code>orthogonal_structure</code></td>
-          <td>
-                <code><span title="pymatgen.core.structure.Structure">Structure</span></code>
-          </td>
-          <td><p>Pymatgen structure of the orthogonalized interface</p></td>
-        </tr>
-        <tr>
-          <td><code>orthogonal_substrate_structure</code></td>
-          <td>
-                <code><span title="pymatgen.core.structure.Structure">Structure</span></code>
-          </td>
-          <td><p>Pymatgen structure of only the substrate half of the orthogonalized interface supercell</p></td>
-        </tr>
-        <tr>
-          <td><code>orthogonal_film_structure</code></td>
-          <td>
-                <code><span title="pymatgen.core.structure.Structure">Structure</span></code>
-          </td>
-          <td><p>Pymatgen structure of only the film half of the orthogonalized interface supercell</p></td>
-        </tr>
-        <tr>
-          <td><code>orthogonal_atoms</code></td>
-          <td>
-                <code><span title="ase.Atoms">Atoms</span></code>
-          </td>
-          <td><p>ASE Atoms of the orthogonalized interface</p></td>
-        </tr>
-        <tr>
-          <td><code>orthogonal_substrate_atoms</code></td>
-          <td>
-                <code><span title="ase.Atoms">Atoms</span></code>
-          </td>
-          <td><p>ASE Atoms of only the substrate half of the orthogonalized interface supercell</p></td>
-        </tr>
-        <tr>
-          <td><code>orthogonal_film_atoms</code></td>
-          <td>
-                <code><span title="ase.Atoms">Atoms</span></code>
-          </td>
-          <td><p>ASE Atoms of only the film half of the orthogonalized interface supercell</p></td>
-        </tr>
-        <tr>
-          <td><code>non_orthogonal_structure</code></td>
-          <td>
-                <code><span title="pymatgen.core.structure.Structure">Structure</span></code>
-          </td>
-          <td><p>Pymatgen structure of the interface structure that assumes the substrate basis</p></td>
-        </tr>
-        <tr>
-          <td><code>non_orthogonal_substrate_structure</code></td>
-          <td>
-                <code><span title="pymatgen.core.structure.Structure">Structure</span></code>
-          </td>
-          <td><p>Pymatgen structure of only the substrate half of the non-orthogonalized interface supercell</p></td>
-        </tr>
-        <tr>
-          <td><code>non_orthogonal_film_structure</code></td>
-          <td>
-                <code><span title="pymatgen.core.structure.Structure">Structure</span></code>
-          </td>
-          <td><p>Pymatgen structure of only the film half of the non-orthogonalized interface supercell</p></td>
-        </tr>
-        <tr>
-          <td><code>non_orthogonal_atoms</code></td>
-          <td>
-                <code><span title="ase.Atoms">Atoms</span></code>
-          </td>
-          <td><p>ASE Atoms of the interface structure that assumes the substrate basis</p></td>
-        </tr>
-        <tr>
-          <td><code>non_orthogonal_substrate_atoms</code></td>
-          <td>
-                <code><span title="ase.Atoms">Atoms</span></code>
-          </td>
-          <td><p>ASE Atoms of only the substrate half of the non-orthogonalized interface supercell</p></td>
-        </tr>
-        <tr>
-          <td><code>non_orthogonal_film_atoms</code></td>
-          <td>
-                <code><span title="ase.Atoms">Atoms</span></code>
-          </td>
-          <td><p>ASE Atoms of only the film half of the non-orthogonalized interface supercell</p></td>
-        </tr>
     </tbody>
   </table>
 
 
         <details class="quote">
           <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 788</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 780</span>
+<span class="normal"> 781</span>
+<span class="normal"> 782</span>
+<span class="normal"> 783</span>
+<span class="normal"> 784</span>
+<span class="normal"> 785</span>
+<span class="normal"> 786</span>
+<span class="normal"> 787</span>
+<span class="normal"> 788</span>
 <span class="normal"> 789</span>
 <span class="normal"> 790</span>
 <span class="normal"> 791</span>
@@ -2609,27 +2533,7 @@ and it should be create exclusively using the SurfaceGenerator.</p>
 <span class="normal">2233</span>
 <span class="normal">2234</span>
 <span class="normal">2235</span>
-<span class="normal">2236</span>
-<span class="normal">2237</span>
-<span class="normal">2238</span>
-<span class="normal">2239</span>
-<span class="normal">2240</span>
-<span class="normal">2241</span>
-<span class="normal">2242</span>
-<span class="normal">2243</span>
-<span class="normal">2244</span>
-<span class="normal">2245</span>
-<span class="normal">2246</span>
-<span class="normal">2247</span>
-<span class="normal">2248</span>
-<span class="normal">2249</span>
-<span class="normal">2250</span>
-<span class="normal">2251</span>
-<span class="normal">2252</span>
-<span class="normal">2253</span>
-<span class="normal">2254</span>
-<span class="normal">2255</span>
-<span class="normal">2256</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Interface</span><span class="p">:</span>
+<span class="normal">2236</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Interface</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Container of Interfaces generated using the InterfaceGenerator</span>
 
 <span class="sd">    The Surface class and will be used as an input to the InterfaceGenerator class,</span>
@@ -2650,18 +2554,6 @@ and it should be create exclusively using the SurfaceGenerator.</p>
 <span class="sd">        interfacial_distance (float): Distance between the top atom of the substrate and the bottom atom of the film</span>
 <span class="sd">        vacuum (float): Size of the vacuum in Angstroms</span>
 <span class="sd">        center (bool): Determines if the interface is centered in the vacuum</span>
-<span class="sd">        orthogonal_structure (Structure): Pymatgen structure of the orthogonalized interface</span>
-<span class="sd">        orthogonal_substrate_structure (Structure): Pymatgen structure of only the substrate half of the orthogonalized interface supercell</span>
-<span class="sd">        orthogonal_film_structure (Structure): Pymatgen structure of only the film half of the orthogonalized interface supercell</span>
-<span class="sd">        orthogonal_atoms (Atoms): ASE Atoms of the orthogonalized interface</span>
-<span class="sd">        orthogonal_substrate_atoms (Atoms): ASE Atoms of only the substrate half of the orthogonalized interface supercell</span>
-<span class="sd">        orthogonal_film_atoms (Atoms): ASE Atoms of only the film half of the orthogonalized interface supercell</span>
-<span class="sd">        non_orthogonal_structure (Structure): Pymatgen structure of the interface structure that assumes the substrate basis</span>
-<span class="sd">        non_orthogonal_substrate_structure (Structure): Pymatgen structure of only the substrate half of the non-orthogonalized interface supercell</span>
-<span class="sd">        non_orthogonal_film_structure (Structure): Pymatgen structure of only the film half of the non-orthogonalized interface supercell</span>
-<span class="sd">        non_orthogonal_atoms (Atoms): ASE Atoms of the interface structure that assumes the substrate basis</span>
-<span class="sd">        non_orthogonal_substrate_atoms (Atoms): ASE Atoms of only the substrate half of the non-orthogonalized interface supercell</span>
-<span class="sd">        non_orthogonal_film_atoms (Atoms): ASE Atoms of only the film half of the non-orthogonalized interface supercell</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -4503,7 +4395,27 @@ and it should be create exclusively using the SurfaceGenerator.</p>
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">945</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">925</span>
+<span class="normal">926</span>
+<span class="normal">927</span>
+<span class="normal">928</span>
+<span class="normal">929</span>
+<span class="normal">930</span>
+<span class="normal">931</span>
+<span class="normal">932</span>
+<span class="normal">933</span>
+<span class="normal">934</span>
+<span class="normal">935</span>
+<span class="normal">936</span>
+<span class="normal">937</span>
+<span class="normal">938</span>
+<span class="normal">939</span>
+<span class="normal">940</span>
+<span class="normal">941</span>
+<span class="normal">942</span>
+<span class="normal">943</span>
+<span class="normal">944</span>
+<span class="normal">945</span>
 <span class="normal">946</span>
 <span class="normal">947</span>
 <span class="normal">948</span>
@@ -4518,27 +4430,7 @@ and it should be create exclusively using the SurfaceGenerator.</p>
 <span class="normal">957</span>
 <span class="normal">958</span>
 <span class="normal">959</span>
-<span class="normal">960</span>
-<span class="normal">961</span>
-<span class="normal">962</span>
-<span class="normal">963</span>
-<span class="normal">964</span>
-<span class="normal">965</span>
-<span class="normal">966</span>
-<span class="normal">967</span>
-<span class="normal">968</span>
-<span class="normal">969</span>
-<span class="normal">970</span>
-<span class="normal">971</span>
-<span class="normal">972</span>
-<span class="normal">973</span>
-<span class="normal">974</span>
-<span class="normal">975</span>
-<span class="normal">976</span>
-<span class="normal">977</span>
-<span class="normal">978</span>
-<span class="normal">979</span>
-<span class="normal">980</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_film_supercell</span><span class="p">(</span>
+<span class="normal">960</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_film_supercell</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">orthogonal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">return_structure</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -4658,7 +4550,27 @@ and it should be create exclusively using the SurfaceGenerator.</p>
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">872</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">852</span>
+<span class="normal">853</span>
+<span class="normal">854</span>
+<span class="normal">855</span>
+<span class="normal">856</span>
+<span class="normal">857</span>
+<span class="normal">858</span>
+<span class="normal">859</span>
+<span class="normal">860</span>
+<span class="normal">861</span>
+<span class="normal">862</span>
+<span class="normal">863</span>
+<span class="normal">864</span>
+<span class="normal">865</span>
+<span class="normal">866</span>
+<span class="normal">867</span>
+<span class="normal">868</span>
+<span class="normal">869</span>
+<span class="normal">870</span>
+<span class="normal">871</span>
+<span class="normal">872</span>
 <span class="normal">873</span>
 <span class="normal">874</span>
 <span class="normal">875</span>
@@ -4672,27 +4584,7 @@ and it should be create exclusively using the SurfaceGenerator.</p>
 <span class="normal">883</span>
 <span class="normal">884</span>
 <span class="normal">885</span>
-<span class="normal">886</span>
-<span class="normal">887</span>
-<span class="normal">888</span>
-<span class="normal">889</span>
-<span class="normal">890</span>
-<span class="normal">891</span>
-<span class="normal">892</span>
-<span class="normal">893</span>
-<span class="normal">894</span>
-<span class="normal">895</span>
-<span class="normal">896</span>
-<span class="normal">897</span>
-<span class="normal">898</span>
-<span class="normal">899</span>
-<span class="normal">900</span>
-<span class="normal">901</span>
-<span class="normal">902</span>
-<span class="normal">903</span>
-<span class="normal">904</span>
-<span class="normal">905</span>
-<span class="normal">906</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_interface</span><span class="p">(</span>
+<span class="normal">886</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_interface</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">orthogonal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">return_structure</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -4811,7 +4703,27 @@ and it should be create exclusively using the SurfaceGenerator.</p>
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">908</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">888</span>
+<span class="normal">889</span>
+<span class="normal">890</span>
+<span class="normal">891</span>
+<span class="normal">892</span>
+<span class="normal">893</span>
+<span class="normal">894</span>
+<span class="normal">895</span>
+<span class="normal">896</span>
+<span class="normal">897</span>
+<span class="normal">898</span>
+<span class="normal">899</span>
+<span class="normal">900</span>
+<span class="normal">901</span>
+<span class="normal">902</span>
+<span class="normal">903</span>
+<span class="normal">904</span>
+<span class="normal">905</span>
+<span class="normal">906</span>
+<span class="normal">907</span>
+<span class="normal">908</span>
 <span class="normal">909</span>
 <span class="normal">910</span>
 <span class="normal">911</span>
@@ -4826,27 +4738,7 @@ and it should be create exclusively using the SurfaceGenerator.</p>
 <span class="normal">920</span>
 <span class="normal">921</span>
 <span class="normal">922</span>
-<span class="normal">923</span>
-<span class="normal">924</span>
-<span class="normal">925</span>
-<span class="normal">926</span>
-<span class="normal">927</span>
-<span class="normal">928</span>
-<span class="normal">929</span>
-<span class="normal">930</span>
-<span class="normal">931</span>
-<span class="normal">932</span>
-<span class="normal">933</span>
-<span class="normal">934</span>
-<span class="normal">935</span>
-<span class="normal">936</span>
-<span class="normal">937</span>
-<span class="normal">938</span>
-<span class="normal">939</span>
-<span class="normal">940</span>
-<span class="normal">941</span>
-<span class="normal">942</span>
-<span class="normal">943</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_substrate_supercell</span><span class="p">(</span>
+<span class="normal">923</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_substrate_supercell</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">orthogonal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">return_structure</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -4950,7 +4842,27 @@ if show_in_colab=True the plot will show up after you run the cell in colab/jupy
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2153</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2133</span>
+<span class="normal">2134</span>
+<span class="normal">2135</span>
+<span class="normal">2136</span>
+<span class="normal">2137</span>
+<span class="normal">2138</span>
+<span class="normal">2139</span>
+<span class="normal">2140</span>
+<span class="normal">2141</span>
+<span class="normal">2142</span>
+<span class="normal">2143</span>
+<span class="normal">2144</span>
+<span class="normal">2145</span>
+<span class="normal">2146</span>
+<span class="normal">2147</span>
+<span class="normal">2148</span>
+<span class="normal">2149</span>
+<span class="normal">2150</span>
+<span class="normal">2151</span>
+<span class="normal">2152</span>
+<span class="normal">2153</span>
 <span class="normal">2154</span>
 <span class="normal">2155</span>
 <span class="normal">2156</span>
@@ -5033,27 +4945,7 @@ if show_in_colab=True the plot will show up after you run the cell in colab/jupy
 <span class="normal">2233</span>
 <span class="normal">2234</span>
 <span class="normal">2235</span>
-<span class="normal">2236</span>
-<span class="normal">2237</span>
-<span class="normal">2238</span>
-<span class="normal">2239</span>
-<span class="normal">2240</span>
-<span class="normal">2241</span>
-<span class="normal">2242</span>
-<span class="normal">2243</span>
-<span class="normal">2244</span>
-<span class="normal">2245</span>
-<span class="normal">2246</span>
-<span class="normal">2247</span>
-<span class="normal">2248</span>
-<span class="normal">2249</span>
-<span class="normal">2250</span>
-<span class="normal">2251</span>
-<span class="normal">2252</span>
-<span class="normal">2253</span>
-<span class="normal">2254</span>
-<span class="normal">2255</span>
-<span class="normal">2256</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_interface</span><span class="p">(</span>
+<span class="normal">2236</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_interface</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;interface_view.png&quot;</span><span class="p">,</span>
     <span class="n">dpi</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span>
@@ -5259,7 +5151,27 @@ if show_in_colab=True the plot will show up after you run the cell in colab/jupy
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1257</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1237</span>
+<span class="normal">1238</span>
+<span class="normal">1239</span>
+<span class="normal">1240</span>
+<span class="normal">1241</span>
+<span class="normal">1242</span>
+<span class="normal">1243</span>
+<span class="normal">1244</span>
+<span class="normal">1245</span>
+<span class="normal">1246</span>
+<span class="normal">1247</span>
+<span class="normal">1248</span>
+<span class="normal">1249</span>
+<span class="normal">1250</span>
+<span class="normal">1251</span>
+<span class="normal">1252</span>
+<span class="normal">1253</span>
+<span class="normal">1254</span>
+<span class="normal">1255</span>
+<span class="normal">1256</span>
+<span class="normal">1257</span>
 <span class="normal">1258</span>
 <span class="normal">1259</span>
 <span class="normal">1260</span>
@@ -5305,27 +5217,7 @@ if show_in_colab=True the plot will show up after you run the cell in colab/jupy
 <span class="normal">1300</span>
 <span class="normal">1301</span>
 <span class="normal">1302</span>
-<span class="normal">1303</span>
-<span class="normal">1304</span>
-<span class="normal">1305</span>
-<span class="normal">1306</span>
-<span class="normal">1307</span>
-<span class="normal">1308</span>
-<span class="normal">1309</span>
-<span class="normal">1310</span>
-<span class="normal">1311</span>
-<span class="normal">1312</span>
-<span class="normal">1313</span>
-<span class="normal">1314</span>
-<span class="normal">1315</span>
-<span class="normal">1316</span>
-<span class="normal">1317</span>
-<span class="normal">1318</span>
-<span class="normal">1319</span>
-<span class="normal">1320</span>
-<span class="normal">1321</span>
-<span class="normal">1322</span>
-<span class="normal">1323</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shift_film</span><span class="p">(</span>
+<span class="normal">1303</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shift_film</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">shift</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
     <span class="n">fractional</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -5478,7 +5370,27 @@ if show_in_colab=True the plot will show up after you run the cell in colab/jupy
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1143</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1123</span>
+<span class="normal">1124</span>
+<span class="normal">1125</span>
+<span class="normal">1126</span>
+<span class="normal">1127</span>
+<span class="normal">1128</span>
+<span class="normal">1129</span>
+<span class="normal">1130</span>
+<span class="normal">1131</span>
+<span class="normal">1132</span>
+<span class="normal">1133</span>
+<span class="normal">1134</span>
+<span class="normal">1135</span>
+<span class="normal">1136</span>
+<span class="normal">1137</span>
+<span class="normal">1138</span>
+<span class="normal">1139</span>
+<span class="normal">1140</span>
+<span class="normal">1141</span>
+<span class="normal">1142</span>
+<span class="normal">1143</span>
 <span class="normal">1144</span>
 <span class="normal">1145</span>
 <span class="normal">1146</span>
@@ -5570,27 +5482,7 @@ if show_in_colab=True the plot will show up after you run the cell in colab/jupy
 <span class="normal">1232</span>
 <span class="normal">1233</span>
 <span class="normal">1234</span>
-<span class="normal">1235</span>
-<span class="normal">1236</span>
-<span class="normal">1237</span>
-<span class="normal">1238</span>
-<span class="normal">1239</span>
-<span class="normal">1240</span>
-<span class="normal">1241</span>
-<span class="normal">1242</span>
-<span class="normal">1243</span>
-<span class="normal">1244</span>
-<span class="normal">1245</span>
-<span class="normal">1246</span>
-<span class="normal">1247</span>
-<span class="normal">1248</span>
-<span class="normal">1249</span>
-<span class="normal">1250</span>
-<span class="normal">1251</span>
-<span class="normal">1252</span>
-<span class="normal">1253</span>
-<span class="normal">1254</span>
-<span class="normal">1255</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span>
+<span class="normal">1235</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;POSCAR_interface&quot;</span><span class="p">,</span>
     <span class="n">orthogonal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -5933,41 +5825,8 @@ filter out symmetrically equivalent interfaces found using the lattice matching 
     </thead>
     <tbody>
         <tr>
-          <td><code>orthogonal_slab_structure</code></td>
-          <td>
-                <code><span title="pymatgen.core.structure.Structure">Structure</span></code>
-          </td>
-          <td><p>Pymatgen Structure that is forced to have an c lattice vector that is orthogonal
-to the inplane lattice vectors</p></td>
-        </tr>
-        <tr>
-          <td><code>orthogonal_slab_atoms</code></td>
-          <td>
-                <code><span title="ase.Atoms">Atoms</span></code>
-          </td>
-          <td><p>ASE Atoms that is forced to have an c lattice vector that is orthogonal
-to the inplane lattice vectors</p></td>
-        </tr>
-        <tr>
-          <td><code>non_orthogonal_slab_structure</code></td>
-          <td>
-                <code><span title="pymatgen.core.structure.Structure">Structure</span></code>
-          </td>
-          <td><p>Pymatgen Structure that is not gaurunteed to have an orthogonal c lattice vector,
-and assumes the same basis as the primitive_oriented_bulk structure.</p></td>
-        </tr>
-        <tr>
-          <td><code>non_orthogonal_slab_atoms</code></td>
-          <td>
-                <code><span title="ase.Atoms">Atoms</span></code>
-          </td>
-          <td><p>ASE Atoms that is not gaurunteed to have an orthogonal c lattice vector,
-and assumes the same basis as the primitive_oriented_bulk structure.</p></td>
-        </tr>
-        <tr>
           <td><code>oriented_bulk_structure</code></td>
           <td>
-                <code><span title="ase.Atoms">Atoms</span></code>
           </td>
           <td><p>Pymatgen Structure of the smallest building block of the slab, which was used to
 construct the non_orthogonal_slab supercell by creating a (1x1xN) supercell where N in the number
@@ -6828,15 +6687,7 @@ filter out symmetrically equivalent interfaces found using the lattice matching 
 <span class="normal">774</span>
 <span class="normal">775</span>
 <span class="normal">776</span>
-<span class="normal">777</span>
-<span class="normal">778</span>
-<span class="normal">779</span>
-<span class="normal">780</span>
-<span class="normal">781</span>
-<span class="normal">782</span>
-<span class="normal">783</span>
-<span class="normal">784</span>
-<span class="normal">785</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Surface</span><span class="p">:</span>
+<span class="normal">777</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Surface</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for surfaces generated with the SurfaceGenerator</span>
 
 <span class="sd">    The Surface class and will be used as an input to the InterfaceGenerator class,</span>
@@ -6882,14 +6733,6 @@ filter out symmetrically equivalent interfaces found using the lattice matching 
 <span class="sd">        c_projection (float): The projections of the c-lattice vector onto the surface normal</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        orthogonal_slab_structure (Structure): Pymatgen Structure that is forced to have an c lattice vector that is orthogonal</span>
-<span class="sd">            to the inplane lattice vectors</span>
-<span class="sd">        orthogonal_slab_atoms (Atoms): ASE Atoms that is forced to have an c lattice vector that is orthogonal</span>
-<span class="sd">            to the inplane lattice vectors</span>
-<span class="sd">        non_orthogonal_slab_structure (Structure): Pymatgen Structure that is not gaurunteed to have an orthogonal c lattice vector,</span>
-<span class="sd">            and assumes the same basis as the primitive_oriented_bulk structure.</span>
-<span class="sd">        non_orthogonal_slab_atoms (Atoms): ASE Atoms that is not gaurunteed to have an orthogonal c lattice vector,</span>
-<span class="sd">            and assumes the same basis as the primitive_oriented_bulk structure.</span>
 <span class="sd">        oriented_bulk_structure: Pymatgen Structure of the smallest building block of the slab, which was used to</span>
 <span class="sd">            construct the non_orthogonal_slab supercell by creating a (1x1xN) supercell where N in the number</span>
 <span class="sd">            of layers.</span>
@@ -7905,7 +7748,15 @@ filter out symmetrically equivalent interfaces found using the lattice matching 
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">157</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
 <span class="normal">158</span>
 <span class="normal">159</span>
 <span class="normal">160</span>
@@ -7931,15 +7782,7 @@ filter out symmetrically equivalent interfaces found using the lattice matching 
 <span class="normal">180</span>
 <span class="normal">181</span>
 <span class="normal">182</span>
-<span class="normal">183</span>
-<span class="normal">184</span>
-<span class="normal">185</span>
-<span class="normal">186</span>
-<span class="normal">187</span>
-<span class="normal">188</span>
-<span class="normal">189</span>
-<span class="normal">190</span>
-<span class="normal">191</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_surface</span><span class="p">(</span>
+<span class="normal">183</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_surface</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">orthogonal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">return_structure</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -8001,15 +7844,15 @@ filter out symmetrically equivalent interfaces found using the lattice matching 
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">777</span>
-<span class="normal">778</span>
-<span class="normal">779</span>
-<span class="normal">780</span>
-<span class="normal">781</span>
-<span class="normal">782</span>
-<span class="normal">783</span>
-<span class="normal">784</span>
-<span class="normal">785</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_termination</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">769</span>
+<span class="normal">770</span>
+<span class="normal">771</span>
+<span class="normal">772</span>
+<span class="normal">773</span>
+<span class="normal">774</span>
+<span class="normal">775</span>
+<span class="normal">776</span>
+<span class="normal">777</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_termination</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the termination of the surface as a dictionary</span>
 
@@ -8126,7 +7969,15 @@ This structure must have the same miller index and termination index.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">663</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">655</span>
+<span class="normal">656</span>
+<span class="normal">657</span>
+<span class="normal">658</span>
+<span class="normal">659</span>
+<span class="normal">660</span>
+<span class="normal">661</span>
+<span class="normal">662</span>
+<span class="normal">663</span>
 <span class="normal">664</span>
 <span class="normal">665</span>
 <span class="normal">666</span>
@@ -8230,15 +8081,7 @@ This structure must have the same miller index and termination index.</p></td>
 <span class="normal">764</span>
 <span class="normal">765</span>
 <span class="normal">766</span>
-<span class="normal">767</span>
-<span class="normal">768</span>
-<span class="normal">769</span>
-<span class="normal">770</span>
-<span class="normal">771</span>
-<span class="normal">772</span>
-<span class="normal">773</span>
-<span class="normal">774</span>
-<span class="normal">775</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">passivate</span><span class="p">(</span>
+<span class="normal">767</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">passivate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">bottom</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">top</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -8424,7 +8267,15 @@ generated using the SurfaceGenerator instead of manually removing layers to get 
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">378</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
 <span class="normal">379</span>
 <span class="normal">380</span>
 <span class="normal">381</span>
@@ -8446,15 +8297,7 @@ generated using the SurfaceGenerator instead of manually removing layers to get 
 <span class="normal">397</span>
 <span class="normal">398</span>
 <span class="normal">399</span>
-<span class="normal">400</span>
-<span class="normal">401</span>
-<span class="normal">402</span>
-<span class="normal">403</span>
-<span class="normal">404</span>
-<span class="normal">405</span>
-<span class="normal">406</span>
-<span class="normal">407</span>
-<span class="normal">408</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">remove_layers</span><span class="p">(</span>
+<span class="normal">400</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">remove_layers</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">num_layers</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">top</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -8559,7 +8402,15 @@ generated using the SurfaceGenerator instead of manually removing layers to get 
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">286</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
 <span class="normal">287</span>
 <span class="normal">288</span>
 <span class="normal">289</span>
@@ -8641,15 +8492,7 @@ generated using the SurfaceGenerator instead of manually removing layers to get 
 <span class="normal">365</span>
 <span class="normal">366</span>
 <span class="normal">367</span>
-<span class="normal">368</span>
-<span class="normal">369</span>
-<span class="normal">370</span>
-<span class="normal">371</span>
-<span class="normal">372</span>
-<span class="normal">373</span>
-<span class="normal">374</span>
-<span class="normal">375</span>
-<span class="normal">376</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span>
+<span class="normal">368</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">orthogonal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;POSCAR_slab&quot;</span><span class="p">,</span>
