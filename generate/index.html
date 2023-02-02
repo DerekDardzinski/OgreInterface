@@ -908,30 +908,7 @@ spacing between the film and substrate materials.</p></td>
 
         <details class="quote">
           <summary>Source code in <code>OgreInterface/generate.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">712</span>
-<span class="normal">713</span>
-<span class="normal">714</span>
-<span class="normal">715</span>
-<span class="normal">716</span>
-<span class="normal">717</span>
-<span class="normal">718</span>
-<span class="normal">719</span>
-<span class="normal">720</span>
-<span class="normal">721</span>
-<span class="normal">722</span>
-<span class="normal">723</span>
-<span class="normal">724</span>
-<span class="normal">725</span>
-<span class="normal">726</span>
-<span class="normal">727</span>
-<span class="normal">728</span>
-<span class="normal">729</span>
-<span class="normal">730</span>
-<span class="normal">731</span>
-<span class="normal">732</span>
-<span class="normal">733</span>
-<span class="normal">734</span>
-<span class="normal">735</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">735</span>
 <span class="normal">736</span>
 <span class="normal">737</span>
 <span class="normal">738</span>
@@ -1166,7 +1143,30 @@ spacing between the film and substrate materials.</p></td>
 <span class="normal">967</span>
 <span class="normal">968</span>
 <span class="normal">969</span>
-<span class="normal">970</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InterfaceGenerator</span><span class="p">:</span>
+<span class="normal">970</span>
+<span class="normal">971</span>
+<span class="normal">972</span>
+<span class="normal">973</span>
+<span class="normal">974</span>
+<span class="normal">975</span>
+<span class="normal">976</span>
+<span class="normal">977</span>
+<span class="normal">978</span>
+<span class="normal">979</span>
+<span class="normal">980</span>
+<span class="normal">981</span>
+<span class="normal">982</span>
+<span class="normal">983</span>
+<span class="normal">984</span>
+<span class="normal">985</span>
+<span class="normal">986</span>
+<span class="normal">987</span>
+<span class="normal">988</span>
+<span class="normal">989</span>
+<span class="normal">990</span>
+<span class="normal">991</span>
+<span class="normal">992</span>
+<span class="normal">993</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InterfaceGenerator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for generating interfaces from two bulk structures</span>
 
 <span class="sd">    This class will use the lattice matching algorithm from Zur and McGill to generate</span>
@@ -1456,30 +1456,30 @@ spacing between the film and substrate materials.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/generate.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">947</span>
-<span class="normal">948</span>
-<span class="normal">949</span>
-<span class="normal">950</span>
-<span class="normal">951</span>
-<span class="normal">952</span>
-<span class="normal">953</span>
-<span class="normal">954</span>
-<span class="normal">955</span>
-<span class="normal">956</span>
-<span class="normal">957</span>
-<span class="normal">958</span>
-<span class="normal">959</span>
-<span class="normal">960</span>
-<span class="normal">961</span>
-<span class="normal">962</span>
-<span class="normal">963</span>
-<span class="normal">964</span>
-<span class="normal">965</span>
-<span class="normal">966</span>
-<span class="normal">967</span>
-<span class="normal">968</span>
-<span class="normal">969</span>
-<span class="normal">970</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_interfaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">970</span>
+<span class="normal">971</span>
+<span class="normal">972</span>
+<span class="normal">973</span>
+<span class="normal">974</span>
+<span class="normal">975</span>
+<span class="normal">976</span>
+<span class="normal">977</span>
+<span class="normal">978</span>
+<span class="normal">979</span>
+<span class="normal">980</span>
+<span class="normal">981</span>
+<span class="normal">982</span>
+<span class="normal">983</span>
+<span class="normal">984</span>
+<span class="normal">985</span>
+<span class="normal">986</span>
+<span class="normal">987</span>
+<span class="normal">988</span>
+<span class="normal">989</span>
+<span class="normal">990</span>
+<span class="normal">991</span>
+<span class="normal">992</span>
+<span class="normal">993</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_interfaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a list of Interface objects from that matches found using the Zur and McGill lattice matching algorithm&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">interfacial_distance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">i_dist</span> <span class="o">=</span> <span class="p">(</span>
@@ -1769,7 +1769,7 @@ which will eventually be used to build the slab supercell</p></td>
           <td><p>The normal vector of the surface</p></td>
         </tr>
         <tr>
-          <td><code>surface_normal_projection</code></td>
+          <td><code>c_projection</code></td>
           <td>
                 <code>float</code>
           </td>
@@ -2446,7 +2446,30 @@ which will eventually be used to build the slab supercell</p></td>
 <span class="normal">706</span>
 <span class="normal">707</span>
 <span class="normal">708</span>
-<span class="normal">709</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SurfaceGenerator</span><span class="p">:</span>
+<span class="normal">709</span>
+<span class="normal">710</span>
+<span class="normal">711</span>
+<span class="normal">712</span>
+<span class="normal">713</span>
+<span class="normal">714</span>
+<span class="normal">715</span>
+<span class="normal">716</span>
+<span class="normal">717</span>
+<span class="normal">718</span>
+<span class="normal">719</span>
+<span class="normal">720</span>
+<span class="normal">721</span>
+<span class="normal">722</span>
+<span class="normal">723</span>
+<span class="normal">724</span>
+<span class="normal">725</span>
+<span class="normal">726</span>
+<span class="normal">727</span>
+<span class="normal">728</span>
+<span class="normal">729</span>
+<span class="normal">730</span>
+<span class="normal">731</span>
+<span class="normal">732</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SurfaceGenerator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for generating surfaces from a given bulk structure.</span>
 
 <span class="sd">    The SurfaceGenerator classes generates surfaces with all possible terminations and contains</span>
@@ -2499,7 +2522,7 @@ which will eventually be used to build the slab supercell</p></td>
 <span class="sd">            (usefull for band unfolding calculations)</span>
 <span class="sd">        inplane_vectors (list): The cartesian vectors of the in-plane lattice vectors.</span>
 <span class="sd">        surface_normal (list): The normal vector of the surface</span>
-<span class="sd">        surface_normal_projection (float): The projections of the c-lattice vector onto the surface normal</span>
+<span class="sd">        c_projection (float): The projections of the c-lattice vector onto the surface normal</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -2541,7 +2564,7 @@ which will eventually be used to build the slab supercell</p></td>
             <span class="bp">self</span><span class="o">.</span><span class="n">transformation_matrix</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inplane_vectors</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">surface_normal</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">surface_normal_projection</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c_projection</span><span class="p">,</span>
         <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_oriented_bulk_structure</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">lazy</span><span class="p">:</span>
@@ -2883,7 +2906,7 @@ which will eventually be used to build the slab supercell</p></td>
         <span class="c1"># distance matrix that accounts for PBC.</span>
         <span class="n">dist_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
         <span class="c1"># h = self.oriented_bulk_structure.lattice.matrix[-1, -1]</span>
-        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">surface_normal_projection</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_projection</span>
         <span class="c1"># Projection of c lattice vector in</span>
         <span class="c1"># direction of surface normal.</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)),</span> <span class="mi">2</span><span class="p">):</span>
@@ -2949,10 +2972,30 @@ which will eventually be used to build the slab supercell</p></td>
         <span class="n">z_coords</span> <span class="o">=</span> <span class="n">slab_base</span><span class="o">.</span><span class="n">frac_coords</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">bot_z</span> <span class="o">=</span> <span class="n">z_coords</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
         <span class="n">top_z</span> <span class="o">=</span> <span class="n">z_coords</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+        <span class="n">max_z_inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">top_z</span><span class="p">,</span> <span class="n">z_coords</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">dists</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">max_z_inds</span><span class="p">:</span>
+            <span class="n">dist</span><span class="p">,</span> <span class="n">image</span> <span class="o">=</span> <span class="n">slab_base</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">distance_and_image_from_frac_coords</span><span class="p">(</span>
+                <span class="n">fcoords</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">dists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+
+        <span class="n">horiz_shift_ind</span> <span class="o">=</span> <span class="n">max_z_inds</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dists</span><span class="p">)]</span>
+        <span class="n">horiz_shift</span> <span class="o">=</span> <span class="o">-</span><span class="n">slab_base</span><span class="p">[</span><span class="n">horiz_shift_ind</span><span class="p">]</span><span class="o">.</span><span class="n">frac_coords</span>
+        <span class="n">horiz_shift</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">slab_base</span><span class="o">.</span><span class="n">translate_sites</span><span class="p">(</span>
+            <span class="n">indices</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">slab_base</span><span class="p">)),</span>
+            <span class="n">vector</span><span class="o">=</span><span class="n">horiz_shift</span><span class="p">,</span>
+            <span class="n">frac_coords</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">to_unit_cell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
         <span class="n">bottom_layer_dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">bot_z</span> <span class="o">-</span> <span class="p">(</span><span class="n">top_z</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">init_matrix</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">top_layer_dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">bot_z</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">top_z</span><span class="p">)</span> <span class="o">*</span> <span class="n">init_matrix</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-        <span class="n">vacuum_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">surface_normal_projection</span>
+        <span class="n">vacuum_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vacuum</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_projection</span>
 
         <span class="k">if</span> <span class="n">vacuum_scale</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">vacuum_scale</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -2964,15 +3007,16 @@ which will eventually be used to build the slab supercell</p></td>
             <span class="n">structure</span><span class="o">=</span><span class="n">slab_base</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span> <span class="n">vacuum_scale</span><span class="o">=</span><span class="n">vacuum_scale</span>
         <span class="p">)</span>
         <span class="n">non_orthogonal_slab</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-        <span class="n">non_orthogonal_min_atom</span> <span class="o">=</span> <span class="n">non_orthogonal_slab</span><span class="o">.</span><span class="n">frac_coords</span><span class="p">[</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">non_orthogonal_slab</span><span class="o">.</span><span class="n">frac_coords</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-        <span class="p">]</span>
-        <span class="n">non_orthogonal_slab</span><span class="o">.</span><span class="n">translate_sites</span><span class="p">(</span>
-            <span class="n">indices</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">non_orthogonal_slab</span><span class="p">)),</span>
-            <span class="n">vector</span><span class="o">=-</span><span class="n">non_orthogonal_min_atom</span><span class="p">,</span>
-            <span class="n">frac_coords</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">to_unit_cell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="c1"># non_orthogonal_min_atom = non_orthogonal_slab.frac_coords[</span>
+        <span class="c1">#     np.argmin(non_orthogonal_slab.frac_coords[:, -1])</span>
+        <span class="c1"># ]</span>
+        <span class="c1"># non_orthogonal_min_c = np.min(non_orthogonal_slab.frac_coords[:, -1])</span>
+        <span class="c1"># non_orthogonal_slab.translate_sites(</span>
+        <span class="c1">#     indices=range(len(non_orthogonal_slab)),</span>
+        <span class="c1">#     vector=-non_orthogonal_min_atom,</span>
+        <span class="c1">#     frac_coords=True,</span>
+        <span class="c1">#     to_unit_cell=True,</span>
+        <span class="c1"># )</span>
 
         <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">non_orthogonal_slab</span><span class="o">.</span><span class="n">lattice</span><span class="o">.</span><span class="n">matrix</span>
         <span class="n">new_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">surface_normal</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">surface_normal</span>
@@ -3091,6 +3135,8 @@ which will eventually be used to build the slab supercell</p></td>
                 <span class="n">bottom_layer_dist</span><span class="o">=</span><span class="n">bottom_layer_dists</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                 <span class="n">top_layer_dist</span><span class="o">=</span><span class="n">top_layer_dists</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                 <span class="n">termination_index</span><span class="o">=</span><span class="n">i</span><span class="p">,</span>
+                <span class="n">surface_normal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">surface_normal</span><span class="p">,</span>
+                <span class="n">c_projection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">c_projection</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">surfaces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">surface</span><span class="p">)</span>
 
