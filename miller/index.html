@@ -1211,7 +1211,30 @@ the Pymatgen SpacegroupAnalyzer.</p></td>
 <span class="normal">403</span>
 <span class="normal">404</span>
 <span class="normal">405</span>
-<span class="normal">406</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MillerSearch</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MillerSearch</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to perform a miller index scan to find all domain matched interfaces of various surfaces.</span>
 
 <span class="sd">    Examples:</span>
@@ -1279,9 +1302,11 @@ the Pymatgen SpacegroupAnalyzer.</p></td>
         <span class="bp">self</span><span class="o">.</span><span class="n">substrate_inds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_unique_miller_indices</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">substrate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_substrate_index</span>
         <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">film_inds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_unique_miller_indices</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">film</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_film_index</span>
         <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_misfit_data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_area_data</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -1298,15 +1323,36 @@ the Pymatgen SpacegroupAnalyzer.</p></td>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_conventional</span><span class="p">:</span>
             <span class="n">sg</span> <span class="o">=</span> <span class="n">SpacegroupAnalyzer</span><span class="p">(</span><span class="n">init_structure</span><span class="p">)</span>
             <span class="n">conventional_structure</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">get_conventional_standard_structure</span><span class="p">()</span>
-            <span class="n">conventional_atoms</span> <span class="o">=</span> <span class="n">AseAtomsAdaptor</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">(</span>
-                <span class="n">conventional_structure</span>
-            <span class="p">)</span>
+            <span class="n">prim_structure</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">get_primitive_standard_structure</span><span class="p">()</span>
 
-            <span class="k">return</span> <span class="n">conventional_structure</span><span class="p">,</span> <span class="n">conventional_atoms</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">conventional_structure</span><span class="p">,</span> <span class="n">prim_structure</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">init_atoms</span> <span class="o">=</span> <span class="n">AseAtomsAdaptor</span><span class="p">()</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">(</span><span class="n">init_structure</span><span class="p">)</span>
+            <span class="n">prim_structure</span> <span class="o">=</span> <span class="n">init_structure</span><span class="o">.</span><span class="n">get_primitive_structure</span><span class="p">()</span>
 
-            <span class="k">return</span> <span class="n">init_structure</span><span class="p">,</span> <span class="n">init_atoms</span>
+            <span class="k">return</span> <span class="n">init_structure</span><span class="p">,</span> <span class="n">prim_structure</span>
+
+    <span class="c1"># def _get_bulk(self, atoms_or_struc):</span>
+    <span class="c1">#     if type(atoms_or_struc) == Atoms:</span>
+    <span class="c1">#         init_structure = AseAtomsAdaptor.get_structure(atoms_or_struc)</span>
+    <span class="c1">#     elif type(atoms_or_struc) == Structure:</span>
+    <span class="c1">#         init_structure = atoms_or_struc</span>
+    <span class="c1">#     else:</span>
+    <span class="c1">#         raise TypeError(</span>
+    <span class="c1">#             f&quot;structure accepts &#39;pymatgen.core.structure.Structure&#39; or &#39;ase.Atoms&#39; not &#39;{type(atoms_or_struc).__name__}&#39;&quot;</span>
+    <span class="c1">#         )</span>
+
+    <span class="c1">#     if self.convert_to_conventional:</span>
+    <span class="c1">#         sg = SpacegroupAnalyzer(init_structure)</span>
+    <span class="c1">#         conventional_structure = sg.get_conventional_standard_structure()</span>
+    <span class="c1">#         conventional_atoms = AseAtomsAdaptor.get_atoms(</span>
+    <span class="c1">#             conventional_structure</span>
+    <span class="c1">#         )</span>
+
+    <span class="c1">#         return conventional_structure, conventional_atoms</span>
+    <span class="c1">#     else:</span>
+    <span class="c1">#         init_atoms = AseAtomsAdaptor().get_atoms(init_structure)</span>
+
+    <span class="c1">#         return init_structure, init_atoms</span>
 
     <span class="k">def</span> <span class="nf">_float_gcd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-08</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
@@ -1361,7 +1407,7 @@ the Pymatgen SpacegroupAnalyzer.</p></td>
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">symmop</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">symmops</span><span class="p">):</span>
                     <span class="n">frac_point_out</span> <span class="o">=</span> <span class="n">symmop</span><span class="o">.</span><span class="n">apply_rotation_only</span><span class="p">(</span><span class="n">frac_vec</span><span class="p">)</span>
                     <span class="n">point_out</span> <span class="o">=</span> <span class="n">frac_point_out</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">lattice</span><span class="o">.</span><span class="n">metric_tensor</span><span class="p">)</span>
-                    <span class="n">point_out</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">_get_reduced_vector</span><span class="p">(</span><span class="n">point_out</span><span class="p">)</span>
+                    <span class="n">point_out</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">_get_reduced_vector</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">point_out</span><span class="p">))</span>
                     <span class="n">point_out</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">point_out</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
                     <span class="n">planes_dict</span><span class="p">[</span><span class="n">plane</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point_out</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">point_out</span> <span class="o">!=</span> <span class="n">plane</span><span class="p">:</span>
@@ -1733,30 +1779,7 @@ if show_in_colab=True the plot will show up after you run the cell in colab/jupy
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/miller.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">287</span>
-<span class="normal">288</span>
-<span class="normal">289</span>
-<span class="normal">290</span>
-<span class="normal">291</span>
-<span class="normal">292</span>
-<span class="normal">293</span>
-<span class="normal">294</span>
-<span class="normal">295</span>
-<span class="normal">296</span>
-<span class="normal">297</span>
-<span class="normal">298</span>
-<span class="normal">299</span>
-<span class="normal">300</span>
-<span class="normal">301</span>
-<span class="normal">302</span>
-<span class="normal">303</span>
-<span class="normal">304</span>
-<span class="normal">305</span>
-<span class="normal">306</span>
-<span class="normal">307</span>
-<span class="normal">308</span>
-<span class="normal">309</span>
-<span class="normal">310</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">310</span>
 <span class="normal">311</span>
 <span class="normal">312</span>
 <span class="normal">313</span>
@@ -1852,7 +1875,30 @@ if show_in_colab=True the plot will show up after you run the cell in colab/jupy
 <span class="normal">403</span>
 <span class="normal">404</span>
 <span class="normal">405</span>
-<span class="normal">406</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_misfits</span><span class="p">(</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_misfits</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">cmap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;magma&quot;</span><span class="p">,</span>
     <span class="n">dpi</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span>
@@ -1995,30 +2041,7 @@ for the substrate and film.</p>
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/miller.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">217</span>
-<span class="normal">218</span>
-<span class="normal">219</span>
-<span class="normal">220</span>
-<span class="normal">221</span>
-<span class="normal">222</span>
-<span class="normal">223</span>
-<span class="normal">224</span>
-<span class="normal">225</span>
-<span class="normal">226</span>
-<span class="normal">227</span>
-<span class="normal">228</span>
-<span class="normal">229</span>
-<span class="normal">230</span>
-<span class="normal">231</span>
-<span class="normal">232</span>
-<span class="normal">233</span>
-<span class="normal">234</span>
-<span class="normal">235</span>
-<span class="normal">236</span>
-<span class="normal">237</span>
-<span class="normal">238</span>
-<span class="normal">239</span>
-<span class="normal">240</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">240</span>
 <span class="normal">241</span>
 <span class="normal">242</span>
 <span class="normal">243</span>
@@ -2063,7 +2086,30 @@ for the substrate and film.</p>
 <span class="normal">282</span>
 <span class="normal">283</span>
 <span class="normal">284</span>
-<span class="normal">285</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run_scan</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run_scan</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Run the miller index scan by looping through all combinations of unique surface miller indices</span>
 <span class="sd">    for the substrate and film.</span>
