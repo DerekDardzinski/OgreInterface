@@ -126,6 +126,7 @@ class BaseSurfaceMatcher:
         X,
         Y,
         Z,
+        Z_force,
         dpi,
         cmap,
         fontsize,
@@ -134,6 +135,7 @@ class BaseSurfaceMatcher:
     ):
         for i, image in enumerate(self.shift_images):
             X_plot, Y_plot, Z_plot = self._get_interpolated_data(Z, image)
+            _, _, Z_plot_forces = self._get_interpolated_data(Z_force, image)
 
             if i == 0:
                 self._plot_heatmap(
@@ -153,8 +155,10 @@ class BaseSurfaceMatcher:
                     Y_plot.ravel(),
                     np.zeros(Y_plot.shape).ravel(),
                 ].dot(np.linalg.inv(self.matrix))
-                opt_shift = frac_shifts[np.argmax(Z_plot.ravel())]
-                max_Z = np.max(Z_plot)
+                # opt_shift = frac_shifts[np.argmax(Z_plot.ravel())]
+                opt_ind = np.argmin(np.abs(Z_plot_forces).ravel())
+                opt_shift = frac_shifts[opt_ind]
+                max_Z = Z_plot.ravel()[opt_ind]
                 plot_shift = opt_shift.dot(self.matrix)
 
                 ax.scatter(

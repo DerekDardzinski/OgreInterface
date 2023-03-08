@@ -4,6 +4,7 @@ from ase import Atoms
 import torch
 import numpy as np
 from OgreInterface.score_function.neighbors import TorchNeighborList
+from pymatgen.core.periodic_table import Element
 
 
 def _atoms_collate_fn(batch):
@@ -134,6 +135,10 @@ def generate_dict_torch(
         R_z = torch.from_numpy(z_positions)
         cell = torch.from_numpy(atom.get_cell().array)
 
+        e_negs = torch.Tensor(
+            [Element(s).X for s in atom.get_chemical_symbols()]
+        )
+
         if z_periodic:
             pbc = torch.Tensor([True, True, True]).to(dtype=torch.bool)
         else:
@@ -147,6 +152,7 @@ def generate_dict_torch(
             "cell": cell,
             "pbc": pbc,
             "is_film": is_film,
+            "e_negs": e_negs,
         }
 
         if charge_dict is not None:
