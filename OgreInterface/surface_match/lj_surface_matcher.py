@@ -259,30 +259,33 @@ class LJSurfaceMatcher(BaseSurfaceMatcher):
         batch_atoms_list = [self._get_shifted_atoms(shift) for shift in shifts]
         batch_inputs = [self._generate_inputs(b) for b in batch_atoms_list]
 
-        # sub_atoms = self.interface.get_substrate_supercell(return_atoms=True)
-        # sub_atoms.set_array("is_film", np.zeros(len(sub_atoms)).astype(bool))
+        sub_atoms = self.interface.get_substrate_supercell(return_atoms=True)
+        sub_atoms.set_array("is_film", np.zeros(len(sub_atoms)).astype(bool))
 
-        # film_atoms = self.interface.get_film_supercell(return_atoms=True)
-        # film_atoms.set_array("is_film", np.ones(len(film_atoms)).astype(bool))
+        film_atoms = self.interface.get_film_supercell(return_atoms=True)
+        film_atoms.set_array("is_film", np.ones(len(film_atoms)).astype(bool))
 
-        # sub_film_atoms = [sub_atoms, film_atoms]
-        # sub_film_inputs = self._generate_inputs(sub_film_atoms)
-        # sub_film_lj, sub_film_force = self._calculate_lj(sub_film_inputs)
+        sub_film_atoms = [sub_atoms, film_atoms]
+        sub_film_inputs = self._generate_inputs(sub_film_atoms)
+        sub_film_lj, sub_film_force = self._calculate_lj(sub_film_inputs)
 
         interface_lj, interface_force = np.dstack(
             [self._calculate_lj(b) for b in batch_inputs]
         ).transpose(0, 2, 1)
 
-        # sub_lj = sub_film_lj[0]
-        # film_lj = sub_film_lj[1]
+        sub_lj = sub_film_lj[0]
+        film_lj = sub_film_lj[1]
+
+        sub_force = sub_film_force[0]
+        film_force = sub_film_force[1]
 
         x_grid = np.linspace(0, 1, self.grid_density_x)
         y_grid = np.linspace(0, 1, self.grid_density_y)
         X, Y = np.meshgrid(x_grid, y_grid)
 
-        # Z = (sub_lj + film_lj - interface_lj) / self.interface.area
-        Z = interface_lj
-        Z_forcee = interface_force
+        Z = (sub_lj + film_lj - interface_lj) / self.interface.area
+        # Z = interface_lj
+        Z_force = sub_force + film_force - interface_force
 
         a = self.matrix[0, :2]
         b = self.matrix[1, :2]
@@ -320,7 +323,7 @@ class LJSurfaceMatcher(BaseSurfaceMatcher):
             X=X,
             Y=Y,
             Z=Z,
-            Z_force=Z_forcee,
+            Z_force=Z_force,
             dpi=dpi,
             cmap=cmap,
             fontsize=fontsize,

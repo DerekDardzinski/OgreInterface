@@ -82,7 +82,17 @@ class BaseSurfaceMatcher:
         )
 
     def _plot_heatmap(
-        self, fig, ax, X, Y, Z, cmap, fontsize, show_max, add_color_bar
+        self,
+        fig,
+        ax,
+        X,
+        Y,
+        Z,
+        Z_force,
+        cmap,
+        fontsize,
+        show_max,
+        add_color_bar,
     ):
         ax.set_xlabel(r"Shift in $x$ ($\AA$)", fontsize=fontsize)
         ax.set_ylabel(r"Shift in $y$ ($\AA$)", fontsize=fontsize)
@@ -104,7 +114,8 @@ class BaseSurfaceMatcher:
             cbar.ax.locator_params(nbins=3)
 
             if show_max:
-                E_max = np.max(Z)
+                opt_ind = np.argmin(np.abs(Z_force).ravel())
+                E_max = Z.ravel()[opt_ind]
                 label = (
                     "$E_{adh}$ (eV/$\\AA^{2}$) : "
                     + "$E_{max}$ = "
@@ -136,6 +147,7 @@ class BaseSurfaceMatcher:
         for i, image in enumerate(self.shift_images):
             X_plot, Y_plot, Z_plot = self._get_interpolated_data(Z, image)
             _, _, Z_plot_forces = self._get_interpolated_data(Z_force, image)
+            Z_plot_forces *= Z_plot_forces
 
             if i == 0:
                 self._plot_heatmap(
@@ -144,6 +156,7 @@ class BaseSurfaceMatcher:
                     X=X_plot,
                     Y=Y_plot,
                     Z=Z_plot,
+                    Z_force=Z_force,
                     cmap=cmap,
                     fontsize=fontsize,
                     show_max=show_max,
@@ -180,6 +193,7 @@ class BaseSurfaceMatcher:
                     X=X_plot,
                     Y=Y_plot,
                     Z=Z_plot,
+                    Z_force=Z_force,
                     cmap=cmap,
                     fontsize=fontsize,
                     show_max=show_max,
