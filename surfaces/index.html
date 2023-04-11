@@ -4870,11 +4870,11 @@ and it should be create exclusively using the SurfaceGenerator.</p>
 
         <span class="n">oriented_film</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span>
             <span class="n">lattice</span><span class="o">=</span><span class="n">Lattice</span><span class="p">(</span><span class="n">new_c_matrix</span><span class="p">),</span>
-            <span class="n">species</span><span class="o">=</span><span class="n">supercell_slab</span><span class="o">.</span><span class="n">species</span><span class="p">,</span>
-            <span class="n">coords</span><span class="o">=</span><span class="n">supercell_slab</span><span class="o">.</span><span class="n">cart_coords</span><span class="p">,</span>
+            <span class="n">species</span><span class="o">=</span><span class="n">strained_film</span><span class="o">.</span><span class="n">species</span><span class="p">,</span>
+            <span class="n">coords</span><span class="o">=</span><span class="n">strained_film</span><span class="o">.</span><span class="n">cart_coords</span><span class="p">,</span>
             <span class="n">coords_are_cartesian</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">to_unit_cell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">site_properties</span><span class="o">=</span><span class="n">supercell_slab</span><span class="o">.</span><span class="n">site_properties</span><span class="p">,</span>
+            <span class="n">site_properties</span><span class="o">=</span><span class="n">strained_film</span><span class="o">.</span><span class="n">site_properties</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">oriented_film</span>
