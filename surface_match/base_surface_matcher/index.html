@@ -1680,7 +1680,12 @@ should be used as a building block for other surface matching classes</p>
 <span class="normal">1004</span>
 <span class="normal">1005</span>
 <span class="normal">1006</span>
-<span class="normal">1007</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseSurfaceMatcher</span><span class="p">:</span>
+<span class="normal">1007</span>
+<span class="normal">1008</span>
+<span class="normal">1009</span>
+<span class="normal">1010</span>
+<span class="normal">1011</span>
+<span class="normal">1012</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseSurfaceMatcher</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Base Class for all other surface matching classes</span>
 
 <span class="sd">    The BaseSurfaceMatcher contains all the basic methods to perform surface matching</span>
@@ -1785,8 +1790,8 @@ should be used as a building block for other surface matching classes</p>
             <span class="n">site_properties</span><span class="o">=</span><span class="n">film_struc</span><span class="o">.</span><span class="n">site_properties</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="n">Poscar</span><span class="p">(</span><span class="n">sub_struc</span><span class="p">)</span><span class="o">.</span><span class="n">write_file</span><span class="p">(</span><span class="s2">&quot;POSCAR_sub_top&quot;</span><span class="p">)</span>
-        <span class="n">Poscar</span><span class="p">(</span><span class="n">film_struc</span><span class="p">)</span><span class="o">.</span><span class="n">write_file</span><span class="p">(</span><span class="s2">&quot;POSCAR_film_bot&quot;</span><span class="p">)</span>
+        <span class="c1"># Poscar(sub_struc).write_file(&quot;POSCAR_sub_top&quot;)</span>
+        <span class="c1"># Poscar(film_struc).write_file(&quot;POSCAR_film_bot&quot;)</span>
 
         <span class="n">sub_equivs</span> <span class="o">=</span> <span class="n">sub_struc</span><span class="o">.</span><span class="n">site_properties</span><span class="p">[</span><span class="s2">&quot;bulk_equivalent&quot;</span><span class="p">]</span>
         <span class="n">film_equivs</span> <span class="o">=</span> <span class="n">film_struc</span><span class="o">.</span><span class="n">site_properties</span><span class="p">[</span><span class="s2">&quot;bulk_equivalent&quot;</span><span class="p">]</span>
@@ -1947,6 +1952,7 @@ should be used as a building block for other surface matching classes</p>
 <span class="sd">            output: Output file name</span>
 <span class="sd">            dpi: Resolution of the figure (dots per inch)</span>
 <span class="sd">            show_opt: Determines if the optimal value is printed on the figure</span>
+
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The optimal value of the negated adhesion energy (smaller is better, negative = stable, positive = unstable)</span>
@@ -2154,6 +2160,8 @@ should be used as a building block for other surface matching classes</p>
         <span class="p">]</span>
         <span class="n">diverging_names</span> <span class="o">=</span> <span class="n">mpl_diverging_names</span> <span class="o">+</span> <span class="n">cm_diverging_names</span>
 
+        <span class="n">Z</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">Z</span><span class="p">))</span>
+
         <span class="n">min_Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
         <span class="n">max_Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cmap</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
@@ -2191,15 +2199,17 @@ should be used as a building block for other surface matching classes</p>
 
             <span class="k">if</span> <span class="n">show_max</span><span class="p">:</span>
                 <span class="n">E_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
-                <span class="n">label</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="s2">&quot;$-E_</span><span class="si">{adh}</span><span class="s2">$ (eV/$</span><span class="se">\\</span><span class="s2">AA^</span><span class="si">{2}</span><span class="s2">$) : &quot;</span>
-                    <span class="o">+</span> <span class="s2">&quot;$E_</span><span class="si">{min}</span><span class="s2">$ = &quot;</span>
-                    <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">E_max</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="p">)</span>
-                <span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$-E_</span><span class="si">{adh}</span><span class="s2">/|E_</span><span class="si">{min}</span><span class="s2">|$ : $E_</span><span class="si">{min}</span><span class="s2">$ = &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">E_max</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="c1"># label = (</span>
+                <span class="c1">#     &quot;$-E_{adh}$ (eV/$\\AA^{2}$) : &quot;</span>
+                <span class="c1">#     + &quot;$E_{min}$ = &quot;</span>
+                <span class="c1">#     + f&quot;{E_max:.4f}&quot;</span>
+                <span class="c1"># )</span>
+                <span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">,</span> <span class="n">labelpad</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$-E_</span><span class="si">{adh}</span><span class="s2">$ (eV/$</span><span class="se">\\</span><span class="s2">AA^</span><span class="si">{2}</span><span class="s2">$)&quot;</span>
-                <span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+                <span class="c1"># label = &quot;$-E_{adh}$ (eV/$\\AA^{2}$)&quot;</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$-E_</span><span class="si">{adh}</span><span class="s2">/|E_</span><span class="si">{min}</span><span class="s2">|$&quot;</span>
+                <span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">,</span> <span class="n">labelpad</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 
             <span class="n">cax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
             <span class="n">cax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
@@ -2890,7 +2900,8 @@ should be used as a building block for other surface matching classes</p>
 <span class="normal">365</span>
 <span class="normal">366</span>
 <span class="normal">367</span>
-<span class="normal">368</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_DFT_data</span><span class="p">(</span>
+<span class="normal">368</span>
+<span class="normal">369</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_DFT_data</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">energies</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">sub_energy</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
@@ -2912,6 +2923,7 @@ should be used as a building block for other surface matching classes</p>
 <span class="sd">        output: Output file name</span>
 <span class="sd">        dpi: Resolution of the figure (dots per inch)</span>
 <span class="sd">        show_opt: Determines if the optimal value is printed on the figure</span>
+
 
 <span class="sd">    Returns:</span>
 <span class="sd">        The optimal value of the negated adhesion energy (smaller is better, negative = stable, positive = unstable)</span>
@@ -3085,8 +3097,7 @@ should be used as a building block for other surface matching classes</p>
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surface_match/base_surface_matcher.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">370</span>
-<span class="normal">371</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">371</span>
 <span class="normal">372</span>
 <span class="normal">373</span>
 <span class="normal">374</span>
@@ -3165,7 +3176,8 @@ should be used as a building block for other surface matching classes</p>
 <span class="normal">447</span>
 <span class="normal">448</span>
 <span class="normal">449</span>
-<span class="normal">450</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_DFT_z_shift</span><span class="p">(</span>
+<span class="normal">450</span>
+<span class="normal">451</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_DFT_z_shift</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">interfacial_distances</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">energies</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -3361,12 +3373,7 @@ and the data is: x_shifts = data["x_shifts"], y_shifts = data["y_shifts"], energ
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surface_match/base_surface_matcher.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">758</span>
-<span class="normal">759</span>
-<span class="normal">760</span>
-<span class="normal">761</span>
-<span class="normal">762</span>
-<span class="normal">763</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">763</span>
 <span class="normal">764</span>
 <span class="normal">765</span>
 <span class="normal">766</span>
@@ -3491,7 +3498,12 @@ and the data is: x_shifts = data["x_shifts"], y_shifts = data["y_shifts"], energ
 <span class="normal">885</span>
 <span class="normal">886</span>
 <span class="normal">887</span>
-<span class="normal">888</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run_surface_matching</span><span class="p">(</span>
+<span class="normal">888</span>
+<span class="normal">889</span>
+<span class="normal">890</span>
+<span class="normal">891</span>
+<span class="normal">892</span>
+<span class="normal">893</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run_surface_matching</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">cmap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;jet&quot;</span><span class="p">,</span>
     <span class="n">fontsize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">14</span><span class="p">,</span>
@@ -3736,12 +3748,7 @@ and the data is: interfacial_distances = data["interfacial_distances"], energies
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surface_match/base_surface_matcher.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 890</span>
-<span class="normal"> 891</span>
-<span class="normal"> 892</span>
-<span class="normal"> 893</span>
-<span class="normal"> 894</span>
-<span class="normal"> 895</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 895</span>
 <span class="normal"> 896</span>
 <span class="normal"> 897</span>
 <span class="normal"> 898</span>
@@ -3853,7 +3860,12 @@ and the data is: interfacial_distances = data["interfacial_distances"], energies
 <span class="normal">1004</span>
 <span class="normal">1005</span>
 <span class="normal">1006</span>
-<span class="normal">1007</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run_z_shift</span><span class="p">(</span>
+<span class="normal">1007</span>
+<span class="normal">1008</span>
+<span class="normal">1009</span>
+<span class="normal">1010</span>
+<span class="normal">1011</span>
+<span class="normal">1012</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run_z_shift</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">interfacial_distances</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">figsize</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>

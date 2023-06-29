@@ -3895,7 +3895,13 @@ and it should be create exclusively using the SurfaceGenerator.</p>
 <span class="normal">3675</span>
 <span class="normal">3676</span>
 <span class="normal">3677</span>
-<span class="normal">3678</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Interface</span><span class="p">:</span>
+<span class="normal">3678</span>
+<span class="normal">3679</span>
+<span class="normal">3680</span>
+<span class="normal">3681</span>
+<span class="normal">3682</span>
+<span class="normal">3683</span>
+<span class="normal">3684</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Interface</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Container of Interfaces generated using the InterfaceGenerator</span>
 
 <span class="sd">    The Surface class and will be used as an input to the InterfaceGenerator class,</span>
@@ -4377,8 +4383,6 @@ and it should be create exclusively using the SurfaceGenerator.</p>
                 <span class="s2">&quot;orig_ind&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unrelaxed_structure</span><span class="p">)))</span>
             <span class="p">)</span>
 
-            <span class="n">relaxation_shifts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">unrelaxed_structure</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
-
             <span class="n">is_negative</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">unrelaxed_structure</span><span class="o">.</span><span class="n">lattice</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span>
 
             <span class="k">if</span> <span class="n">is_negative</span><span class="p">:</span>
@@ -4387,6 +4391,14 @@ and it should be create exclusively using the SurfaceGenerator.</p>
                     <span class="n">species</span><span class="o">=</span><span class="n">relaxed_structure</span><span class="o">.</span><span class="n">species</span><span class="p">,</span>
                     <span class="n">coords</span><span class="o">=</span><span class="n">relaxed_structure</span><span class="o">.</span><span class="n">frac_coords</span><span class="p">,</span>
                 <span class="p">)</span>
+
+            <span class="n">hydrogen_inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">relaxed_structure</span><span class="o">.</span><span class="n">atomic_numbers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">relaxed_structure</span><span class="o">.</span><span class="n">remove_sites</span><span class="p">(</span><span class="n">hydrogen_inds</span><span class="p">)</span>
+
+            <span class="n">relaxation_shifts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">unrelaxed_structure</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
 
             <span class="n">is_film_full</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
                 <span class="n">unrelaxed_structure</span><span class="o">.</span><span class="n">site_properties</span><span class="p">[</span><span class="s2">&quot;is_film&quot;</span><span class="p">]</span>
@@ -7678,13 +7690,7 @@ if show_in_colab=True the plot will show up after you run the cell in colab/jupy
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">3337</span>
-<span class="normal">3338</span>
-<span class="normal">3339</span>
-<span class="normal">3340</span>
-<span class="normal">3341</span>
-<span class="normal">3342</span>
-<span class="normal">3343</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">3343</span>
 <span class="normal">3344</span>
 <span class="normal">3345</span>
 <span class="normal">3346</span>
@@ -8019,7 +8025,13 @@ if show_in_colab=True the plot will show up after you run the cell in colab/jupy
 <span class="normal">3675</span>
 <span class="normal">3676</span>
 <span class="normal">3677</span>
-<span class="normal">3678</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_interface</span><span class="p">(</span>
+<span class="normal">3678</span>
+<span class="normal">3679</span>
+<span class="normal">3680</span>
+<span class="normal">3681</span>
+<span class="normal">3682</span>
+<span class="normal">3683</span>
+<span class="normal">3684</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_interface</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;interface_view.png&quot;</span><span class="p">,</span>
     <span class="n">strain</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -8414,13 +8426,7 @@ then the relax positions can be applied to a much larger interface for a static 
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1584</span>
-<span class="normal">1585</span>
-<span class="normal">1586</span>
-<span class="normal">1587</span>
-<span class="normal">1588</span>
-<span class="normal">1589</span>
-<span class="normal">1590</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1590</span>
 <span class="normal">1591</span>
 <span class="normal">1592</span>
 <span class="normal">1593</span>
@@ -8477,7 +8483,13 @@ then the relax positions can be applied to a much larger interface for a static 
 <span class="normal">1644</span>
 <span class="normal">1645</span>
 <span class="normal">1646</span>
-<span class="normal">1647</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">relax_interface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relaxed_structure_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">1647</span>
+<span class="normal">1648</span>
+<span class="normal">1649</span>
+<span class="normal">1650</span>
+<span class="normal">1651</span>
+<span class="normal">1652</span>
+<span class="normal">1653</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">relax_interface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relaxed_structure_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will shift the positions of the atoms near the interface coorresponding to the</span>
 <span class="sd">    atomic positions from a relaxed interface. This especially usefull when running DFT on large interface</span>
@@ -8768,13 +8780,7 @@ be as shown in the example above.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1799</span>
-<span class="normal">1800</span>
-<span class="normal">1801</span>
-<span class="normal">1802</span>
-<span class="normal">1803</span>
-<span class="normal">1804</span>
-<span class="normal">1805</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1805</span>
 <span class="normal">1806</span>
 <span class="normal">1807</span>
 <span class="normal">1808</span>
@@ -8801,7 +8807,13 @@ be as shown in the example above.</p></td>
 <span class="normal">1829</span>
 <span class="normal">1830</span>
 <span class="normal">1831</span>
-<span class="normal">1832</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_interfacial_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interfacial_distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">1832</span>
+<span class="normal">1833</span>
+<span class="normal">1834</span>
+<span class="normal">1835</span>
+<span class="normal">1836</span>
+<span class="normal">1837</span>
+<span class="normal">1838</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_interfacial_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interfacial_distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sets a new interfacial distance for the interface by shifting the film in the z-direction</span>
 
@@ -8909,13 +8921,7 @@ be as shown in the example above.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1834</span>
-<span class="normal">1835</span>
-<span class="normal">1836</span>
-<span class="normal">1837</span>
-<span class="normal">1838</span>
-<span class="normal">1839</span>
-<span class="normal">1840</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1840</span>
 <span class="normal">1841</span>
 <span class="normal">1842</span>
 <span class="normal">1843</span>
@@ -8963,7 +8969,13 @@ be as shown in the example above.</p></td>
 <span class="normal">1885</span>
 <span class="normal">1886</span>
 <span class="normal">1887</span>
-<span class="normal">1888</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shift_film_inplane</span><span class="p">(</span>
+<span class="normal">1888</span>
+<span class="normal">1889</span>
+<span class="normal">1890</span>
+<span class="normal">1891</span>
+<span class="normal">1892</span>
+<span class="normal">1893</span>
+<span class="normal">1894</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shift_film_inplane</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">x_shift</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">y_shift</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -9104,13 +9116,7 @@ be as shown in the example above.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/surfaces.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1649</span>
-<span class="normal">1650</span>
-<span class="normal">1651</span>
-<span class="normal">1652</span>
-<span class="normal">1653</span>
-<span class="normal">1654</span>
-<span class="normal">1655</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1655</span>
 <span class="normal">1656</span>
 <span class="normal">1657</span>
 <span class="normal">1658</span>
@@ -9224,7 +9230,13 @@ be as shown in the example above.</p></td>
 <span class="normal">1766</span>
 <span class="normal">1767</span>
 <span class="normal">1768</span>
-<span class="normal">1769</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span>
+<span class="normal">1769</span>
+<span class="normal">1770</span>
+<span class="normal">1771</span>
+<span class="normal">1772</span>
+<span class="normal">1773</span>
+<span class="normal">1774</span>
+<span class="normal">1775</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;POSCAR_interface&quot;</span><span class="p">,</span>
     <span class="n">orthogonal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>

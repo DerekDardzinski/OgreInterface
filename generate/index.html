@@ -962,11 +962,7 @@ spacing between the film and substrate materials.</p></td>
 
         <details class="quote">
           <summary>Source code in <code>OgreInterface/generate.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1235</span>
-<span class="normal">1236</span>
-<span class="normal">1237</span>
-<span class="normal">1238</span>
-<span class="normal">1239</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1239</span>
 <span class="normal">1240</span>
 <span class="normal">1241</span>
 <span class="normal">1242</span>
@@ -1228,7 +1224,11 @@ spacing between the film and substrate materials.</p></td>
 <span class="normal">1498</span>
 <span class="normal">1499</span>
 <span class="normal">1500</span>
-<span class="normal">1501</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InterfaceGenerator</span><span class="p">:</span>
+<span class="normal">1501</span>
+<span class="normal">1502</span>
+<span class="normal">1503</span>
+<span class="normal">1504</span>
+<span class="normal">1505</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InterfaceGenerator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for generating interfaces from two bulk structures</span>
 
 <span class="sd">    This class will use the lattice matching algorithm from Zur and McGill to generate</span>
@@ -1526,11 +1526,7 @@ spacing between the film and substrate materials.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/generate.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1478</span>
-<span class="normal">1479</span>
-<span class="normal">1480</span>
-<span class="normal">1481</span>
-<span class="normal">1482</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1482</span>
 <span class="normal">1483</span>
 <span class="normal">1484</span>
 <span class="normal">1485</span>
@@ -1549,7 +1545,11 @@ spacing between the film and substrate materials.</p></td>
 <span class="normal">1498</span>
 <span class="normal">1499</span>
 <span class="normal">1500</span>
-<span class="normal">1501</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_interfaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">1501</span>
+<span class="normal">1502</span>
+<span class="normal">1503</span>
+<span class="normal">1504</span>
+<span class="normal">1505</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_interfaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a list of Interface objects from that matches found using the Zur and McGill lattice matching algorithm&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">interfacial_distance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">i_dist</span> <span class="o">=</span> <span class="p">(</span>
@@ -1835,11 +1835,7 @@ which will eventually be used to build the slab supercell</p></td>
 
         <details class="quote">
           <summary>Source code in <code>OgreInterface/generate.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1055</span>
-<span class="normal">1056</span>
-<span class="normal">1057</span>
-<span class="normal">1058</span>
-<span class="normal">1059</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1059</span>
 <span class="normal">1060</span>
 <span class="normal">1061</span>
 <span class="normal">1062</span>
@@ -2012,7 +2008,11 @@ which will eventually be used to build the slab supercell</p></td>
 <span class="normal">1229</span>
 <span class="normal">1230</span>
 <span class="normal">1231</span>
-<span class="normal">1232</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MolecularSurfaceGenerator</span><span class="p">(</span><span class="n">SurfaceGenerator</span><span class="p">):</span>
+<span class="normal">1232</span>
+<span class="normal">1233</span>
+<span class="normal">1234</span>
+<span class="normal">1235</span>
+<span class="normal">1236</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MolecularSurfaceGenerator</span><span class="p">(</span><span class="n">SurfaceGenerator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for generating surfaces from a given bulk molecular crystal structure.</span>
 
 <span class="sd">    The MolecularSurfaceGenerator class generates surfaces with all possible terminations and contains</span>
@@ -2318,11 +2318,7 @@ which will eventually be used to build the slab supercell</p></td>
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/generate.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1181</span>
-<span class="normal">1182</span>
-<span class="normal">1183</span>
-<span class="normal">1184</span>
-<span class="normal">1185</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1185</span>
 <span class="normal">1186</span>
 <span class="normal">1187</span>
 <span class="normal">1188</span>
@@ -2351,7 +2347,11 @@ which will eventually be used to build the slab supercell</p></td>
 <span class="normal">1211</span>
 <span class="normal">1212</span>
 <span class="normal">1213</span>
-<span class="normal">1214</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">1214</span>
+<span class="normal">1215</span>
+<span class="normal">1216</span>
+<span class="normal">1217</span>
+<span class="normal">1218</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span>
     <span class="bp">cls</span><span class="p">,</span>
     <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -3666,7 +3666,11 @@ which will eventually be used to build the slab supercell</p></td>
 <span class="normal">1049</span>
 <span class="normal">1050</span>
 <span class="normal">1051</span>
-<span class="normal">1052</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SurfaceGenerator</span><span class="p">(</span><span class="n">Sequence</span><span class="p">):</span>
+<span class="normal">1052</span>
+<span class="normal">1053</span>
+<span class="normal">1054</span>
+<span class="normal">1055</span>
+<span class="normal">1056</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SurfaceGenerator</span><span class="p">(</span><span class="n">Sequence</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for generating surfaces from a given bulk structure.</span>
 
 <span class="sd">    The SurfaceGenerator classes generates surfaces with all possible terminations and contains</span>
@@ -3748,6 +3752,7 @@ which will eventually be used to build the slab supercell</p></td>
         <span class="bp">self</span><span class="o">.</span><span class="n">_use_prim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bulk_structure</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">primitive_structure</span>
         <span class="p">)</span>
+        <span class="c1"># self._use_prim = False</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_point_group_operations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_point_group_operations</span><span class="p">()</span>
 
@@ -4151,10 +4156,12 @@ which will eventually be used to build the slab supercell</p></td>
                     <span class="k">break</span>
             <span class="c1"># We want the indices with the maximum absolute cosine,</span>
             <span class="c1"># but smallest possible length.</span>
+
             <span class="n">uvw</span><span class="p">,</span> <span class="n">cosine</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">diff</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
                 <span class="n">candidates</span><span class="p">,</span>
                 <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
             <span class="p">)</span>
+
             <span class="n">basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">basis</span><span class="p">,</span> <span class="n">uvw</span><span class="p">])</span>
 
         <span class="n">init_oriented_struc</span> <span class="o">=</span> <span class="n">struc_for_slab</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -4193,6 +4200,7 @@ which will eventually be used to build the slab supercell</p></td>
         <span class="c1">#         planar_mol.apply_operation(to_planar_operation)</span>
         <span class="c1">#         centered_mol = planar_mol.get_centered_molecule()</span>
         <span class="c1">#         site.properties[&quot;molecules&quot;] = centered_mol</span>
+        <span class="c1"># Poscar(init_oriented_struc).write_file(&quot;POSCAR_obs_001&quot;)</span>
 
         <span class="n">planar_oriented_struc</span> <span class="o">=</span> <span class="n">init_oriented_struc</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">planar_oriented_struc</span><span class="o">.</span><span class="n">apply_operation</span><span class="p">(</span><span class="n">to_planar_operation</span><span class="p">)</span>
@@ -4856,8 +4864,7 @@ work exclusively with the primitive structure so we always have it on hand.</p><
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/generate.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">181</span>
-<span class="normal">182</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">182</span>
 <span class="normal">183</span>
 <span class="normal">184</span>
 <span class="normal">185</span>
@@ -4898,7 +4905,8 @@ work exclusively with the primitive structure so we always have it on hand.</p><
 <span class="normal">220</span>
 <span class="normal">221</span>
 <span class="normal">222</span>
-<span class="normal">223</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">223</span>
+<span class="normal">224</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span>
     <span class="bp">cls</span><span class="p">,</span>
     <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -4963,14 +4971,14 @@ work exclusively with the primitive structure so we always have it on hand.</p><
 
       <details class="quote">
         <summary>Source code in <code>OgreInterface/generate.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">172</span>
-<span class="normal">173</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">173</span>
 <span class="normal">174</span>
 <span class="normal">175</span>
 <span class="normal">176</span>
 <span class="normal">177</span>
 <span class="normal">178</span>
-<span class="normal">179</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_slabs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">179</span>
+<span class="normal">180</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_slabs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Used to generate list of Surface objects if lazy=True&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lazy</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_slabs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_slabs</span><span class="p">()</span>
