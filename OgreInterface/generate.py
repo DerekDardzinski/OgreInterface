@@ -1178,7 +1178,7 @@ class MolecularSurfaceGenerator(SurfaceGenerator):
         else:
             bulk_structure = bulk
             
-        # Get the primitive structure to label the molecuels
+        # Get the primitive structure to label the molecules
         prim_bulk = utils.spglib_standardize(
             bulk_structure,
             to_primitive=True,
@@ -1192,7 +1192,7 @@ class MolecularSurfaceGenerator(SurfaceGenerator):
             (np.round(prim_to_conv).astype(int) - prim_to_conv).sum(), 0.0
         ):
             print(
-                "WARNING: Something went wrong with reducing the structure to it's primitive cell"
+                "WARNING: Something went wrong with reducing the structure to its primitive cell"
             )
 
         # Label the molecules with dummy atoms
@@ -1215,7 +1215,7 @@ class MolecularSurfaceGenerator(SurfaceGenerator):
         # Extract the oriented bulk structure
         obs = self.oriented_bulk_structure
 
-        # Replace the molecules with their cooresponding dummy atoms at their center of mass
+        # Replace the molecules with their corresponding dummy atoms at their centers of mass
         dummy_obs = utils.replace_molecules_with_atoms(obs)
 
         # Add oriented_bulk_equivalent site property
