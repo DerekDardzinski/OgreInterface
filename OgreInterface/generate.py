@@ -1172,15 +1172,21 @@ class MolecularSurfaceGenerator(SurfaceGenerator):
         generate_all: bool = True,
         lazy: bool = False,
     ) -> None:
+        # Convert bulk to Structure if it is Atoms
+        if type(bulk) == Atoms:
+            bulk_structure = AseAtomsAdaptor.get_structure(bulk)
+        else:
+            bulk_structure = bulk
+            
         # Get the primitive structure to label the molecuels
         prim_bulk = utils.spglib_standardize(
-            bulk,
+            bulk_structure,
             to_primitive=True,
             no_idealize=True,
         )
 
         # Get the primitive to conventional transformation matrix
-        prim_to_conv = np.round(utils.conv_a_to_b(prim_bulk, bulk), 3)
+        prim_to_conv = np.round(utils.conv_a_to_b(prim_bulk, bulk_structure), 3)
 
         if not np.isclose(
             (np.round(prim_to_conv).astype(int) - prim_to_conv).sum(), 0.0
