@@ -43,6 +43,40 @@ SelfInterfaceGenerator = TypeVar(
     "SelfInterfaceGenerator", bound="InterfaceGenerator"
 )
 
+def _top_atom_c_frac_coords_by_molecule(molecular_obs: Structure) -> Tuple[List, List, List]:
+    obs_structure_graph = StructureGraph.with_local_env_strategy(molecular_obs, JmolNN())
+    
+    # Do I actually need to do this? Try with and without.
+    # Create 3x3 supercell
+    obs_supercell_structure_graph = obs_structure_graph * (3, 3, 3)
+    supercell_graph = nx.Graph(obs_supercell_structure_graph.graph)
+
+    # Extract all molecule subgraphs
+    all_subgraphs = [supercell_graph.subgraph(c) for c in nx.connected_components(supercell_graph)]
+
+    # Only keep those molecules that are completely contained in the 3x3 supercell
+    molecule_subgraphs = []
+    for subgraph in all_subgraphs:
+        intersects_boundary = any(
+            d["to_jimage"] != (0, 0, 0)
+            for u, v, d in subgraph.edges(data=True)
+        )
+        if not intersects_boundary:
+            molecule_subgraphs.append(nx.MultiDiGraph(subgraph))
+    
+    # Manny had some Hydrogen-trimming thing going on here
+
+    # Construct list of Molecule objects from molecule subgraphs
+    molecules = []
+    for molecule_subgraph in molecule_subgraphs:
+        species = [obs_supercell_structure_graph.structure[n].specie for n in molecule_subgraph.nodes()]
+        coords = [obs_supercell_structure_graph.structure[n].coords for n in molecule_subgraph.nodes()]
+        molecule = Molecule(species=species, coords=coords)
+        molecules.append(molecule)
+
+    # Return list of greatest c-dimension fractional coordinates by molecule
+    return [np.max(np.array(molecular_obs.lattice.get_fractional_coords(molecule.cart_coords))[:, 2]) for molecule in molecules]
+
 
 class TolarenceError(RuntimeError):
     """Class to handle errors when no interfaces are found for a given tolarence setting."""
@@ -673,41 +707,47 @@ class SurfaceGenerator(Sequence):
         )
 
     def _calculate_possible_shifts(self, tol: float = 0.1):
-        frac_coords = self.oriented_bulk_structure.frac_coords
-        n = len(frac_coords)
-
+        if isinstance(self, SelfMolecularSurfaceGenerator):
+            molecular_obs = utils.add_molecules(self.oriented_bulk_structure)
+            c_frac_coords = _top_atom_c_frac_coords_by_molecule(molecular_obs) # [[0.2, 0.3, 0.4], [0.5, 0.6, 0.7]]
+        else:
+            c_frac_coords = self.oriented_bulk_structure.frac_coords[:, 2] # [[0.2, 0.3, 0.4], [0.5, 0.6, 0.7]]
+        
+        n = len(c_frac_coords) # number of atoms/molecules in OBS
+    
         if n == 1:
             # Clustering does not work when there is only one data point.
-            shift = frac_coords[0][2] + 0.5
+            shift = c_frac_coords[0] + 0.5 # (1/2) + c-dimension fractional coordinate of the sole atom/top atom in OBS
             return [shift - math.floor(shift)]
-
+    
         # We cluster the sites according to the c coordinates. But we need to
         # take into account PBC. Let's compute a fractional c-coordinate
         # distance matrix that accounts for PBC.
         dist_matrix = np.zeros((n, n))
         # h = self.oriented_bulk_structure.lattice.matrix[-1, -1]
-        h = self.c_projection
+        h = self.c_projection # surface norm (dot) c lattice vector of OBS == length of c lattice vector of OBS projected in the direction of surface normal =?= length of surface normal projected in direction of c lattice vector of OBS
         # Projection of c lattice vector in
         # direction of surface normal.
-        for i, j in combinations(list(range(n)), 2):
-            if i != j:
-                cdist = frac_coords[i][2] - frac_coords[j][2]
-                cdist = abs(cdist - round(cdist)) * h
-                dist_matrix[i, j] = cdist
+        for i, j in combinations(list(range(n)), 2): # i, j == each of every pair of OBS atoms'/top atoms' indices, apart from when i = j, only counting one of {(a,b),(b,a)}. i < j.
+            if i != j: # this is unnecessary, I think. TODO: tell Derek
+                cdist = c_frac_coords[i] - c_frac_coords[j] # c-dimension fractional coordinate of OBS atom/top atom i minus that of OBS atom/top atom j
+                cdist = abs(cdist - round(cdist)) * h # length of OBS c vector projected in the direction of the surface normal times orc fangs function connecting (-1,0), (-0.5,0.5), (0,0), (0.5,0.5), and (1,0) of c-dimension fractional coordinate of OBS atom/top atom i minus that of OBS atom/top atom j
+                dist_matrix[i, j] = cdist # dist_matrix[i, j] == dist_matrix[j, i] == length of OBS c vector projected in the direction of the surface normal times orc fangs function connecting (-1,0), (-0.5,0.5), (0,0), (0.5,0.5), and (1,0) of c-dimension fractional coordinate of OBS atom/top atom i minus that of OBS atom/top atom j
                 dist_matrix[j, i] = cdist
-
-        condensed_m = squareform(dist_matrix)
-        z = linkage(condensed_m)
-        clusters = fcluster(z, tol, criterion="distance")
-
+    
+        condensed_m = squareform(dist_matrix) # vector of length of OBS c vector projected in the direction of the surface normal times orc fangs function connecting (-1,0), (-0.5,0.5), (0,0), (0.5,0.5), and (1,0) of c-dimension fractional coordinate of OBS atom/top atom i minus that of OBS atom/top atom j, arranged as [d01, d02, ..., d0k, d12, d13, ..., d1k, ..., d(k-1)k]
+        z = linkage(condensed_m) # linkage matrix (for hierarchical clustering) of vector of "projected c distances" between atoms/top atoms in the OBS structure
+        clusters = fcluster(z, tol, criterion="distance") # "clusters" == indices of cluster assignments of "projected c distances" between atoms in the OBS structure
+    
         # Generate dict of cluster# to c val - doesn't matter what the c is.
-        c_loc = {c: frac_coords[i][2] for i, c in enumerate(clusters)}
-
+        c_loc = {c: c_frac_coords[i] for i, c in enumerate(clusters)} # dictionary mapping clusters to c-dimension fractional coordinates of OBS atoms/top atoms corresponding to those clusters
+    
         # Put all c into the unit cell.
-        possible_c = [c - math.floor(c) for c in sorted(c_loc.values())]
-
+        #TODO: Ask Derek: Should the coordinates really be sorted *before* being brought into the unit cell, not after?
+        possible_c = [c - math.floor(c) for c in sorted(c_loc.values())] # list of periodically-shifted-into-the-unit-cell sorted c-dimension fractional coordinates of OBS atoms/top atoms
+    
         # Calculate the shifts
-        nshifts = len(possible_c)
+        nshifts = len(possible_c) # pretty sure this is always just one less than the number of atoms/molecules in the OBS
         shifts = []
         for i in range(nshifts):
             if i == nshifts - 1:
@@ -719,9 +759,9 @@ class SurfaceGenerator(Sequence):
             else:
                 shift = (possible_c[i] + possible_c[i + 1]) * 0.5
             shifts.append(shift - math.floor(shift))
-
+    
         shifts = sorted(shifts)
-
+    
         return shifts
 
     def _get_neighborhood(self, cutoff: float = 5.0) -> None:
