@@ -314,6 +314,10 @@ def get_miller_index_label(miller_index: List[int]):
     )
 
 
+def get_miller_index_string(miller_index: List[int]):
+    return "".join([str(i) for i in miller_index])
+
+
 def add_symmetry_info(struc: Structure, return_primitive: bool = False):
     init_lattice = struc.lattice.matrix
     init_positions = struc.frac_coords
