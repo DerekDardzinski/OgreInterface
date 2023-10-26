@@ -107,17 +107,19 @@ class BaseSurfaceGenerator(Sequence):
         generate_all: bool = True,
         lazy: bool = False,
         suppress_warnings: bool = False,
+        termination_grouping_tolerance: Optional[float] = None
     ) -> None:
         super().__init__()
         self.refine_structure = refine_structure
         self.surface_type = surface_type
         self._suppress_warnings = suppress_warnings
         self._make_planar = make_planar
+        #self._termination_grouping_tolerance = termination_grouping_tolerance
 
         self.bulk_structure = utils.load_bulk(
             atoms_or_structure=bulk,
             refine_structure=refine_structure,
-            suppress_warnings=suppress_warnings,
+            suppress_warnings=suppress_warnings
         )
 
         self.miller_index = miller_index
@@ -129,7 +131,7 @@ class BaseSurfaceGenerator(Sequence):
         self.obs = OrientedBulk(
             bulk=self.bulk_structure,
             miller_index=self.miller_index,
-            make_planar=self._make_planar,
+            make_planar=self._make_planar
         )
 
         if layers is None and minimum_thickness is None:
@@ -142,7 +144,7 @@ class BaseSurfaceGenerator(Sequence):
             )
 
         if not self.lazy:
-            self._slabs = self._generate_slabs()
+            self._slabs = self._generate_slabs(tol=termination_grouping_tolerance)
         else:
             self._slabs = None
 
@@ -159,6 +161,7 @@ class BaseSurfaceGenerator(Sequence):
         generate_all: bool = True,
         lazy: bool = False,
         suppress_warnings: bool = False,
+        termination_grouping_tolerance: Optional[float] = None
     ) -> SelfBaseSurfaceGenerator:
         """Creating a SurfaceGenerator from a file (i.e. POSCAR, cif, etc)
 
@@ -192,6 +195,7 @@ class BaseSurfaceGenerator(Sequence):
             generate_all=generate_all,
             lazy=lazy,
             suppress_warnings=suppress_warnings,
+            termination_grouping_tolerance=termination_grouping_tolerance
         )
 
     def __getitem__(self, i) -> Surface:
@@ -205,10 +209,13 @@ class BaseSurfaceGenerator(Sequence):
     def __len__(self) -> int:
         return len(self._slabs)
 
-    def generate_slabs(self) -> None:
+    def generate_slabs(
+        self,
+        tol: Optional[float] = None    
+    ) -> None:
         """Used to generate list of Surface objects if lazy=True"""
         if self.lazy:
-            self._slabs = self._generate_slabs()
+            self._slabs = self._generate_slabs(tol=tol)
         else:
             print(
                 "The slabs are already generated upon initialization. This function is only needed if lazy=True"
@@ -277,6 +284,7 @@ class BaseSurfaceGenerator(Sequence):
         # and lower bounds of where an atomic layer should be.
         shifts = self._calculate_possible_shifts(
             structure=slab_base.oriented_bulk_structure,
+            tol=tol
         )
         shifts += [1.0]
 
@@ -388,7 +396,10 @@ class BaseSurfaceGenerator(Sequence):
             surf_key,
         )
 
-    def _generate_slabs(self) -> List[Union[Surface, MolecularSurface]]:
+    def _generate_slabs(
+        self,
+        tol: Optional[float] = None
+    ) -> List[Union[Surface, MolecularSurface]]:
         """
         This function is used to generate slab structures with all unique
         surface terminations.
@@ -399,7 +410,8 @@ class BaseSurfaceGenerator(Sequence):
         # Determine if all possible terminations are generated
         slab_base = self._get_slab_base()
         possible_shifts = self._calculate_possible_shifts(
-            structure=slab_base.oriented_bulk_structure
+            structure=slab_base.oriented_bulk_structure,
+            tol=tol
         )
         shifted_slab_bases = []
         non_orthogonal_slabs = []
@@ -414,6 +426,7 @@ class BaseSurfaceGenerator(Sequence):
             ) = self._get_slab(
                 slab_base=deepcopy(slab_base),
                 shift=possible_shifts[0],
+                tol=tol
             )
             non_orthogonal_slab.sort_index = 0
             shifted_slab_bases.append(shifted_slab_base)
@@ -429,6 +442,7 @@ class BaseSurfaceGenerator(Sequence):
                 ) = self._get_slab(
                     slab_base=deepcopy(slab_base),
                     shift=possible_shift,
+                    tol=tol
                 )
                 non_orthogonal_slab.sort_index = i
                 shifted_slab_bases.append(shifted_slab_base)
