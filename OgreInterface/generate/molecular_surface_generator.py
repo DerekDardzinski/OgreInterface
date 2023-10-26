@@ -91,6 +91,7 @@ class MolecularSurfaceGenerator(BaseSurfaceGenerator):
         generate_all: bool = True,
         lazy: bool = False,
         suppress_warnings: bool = False,
+        termination_grouping_tolerance: Optional[float] = None
     ) -> SelfMolecularSurfaceGenerator:
         super().__init__(
             bulk=bulk,
@@ -104,6 +105,7 @@ class MolecularSurfaceGenerator(BaseSurfaceGenerator):
             generate_all=generate_all,
             lazy=lazy,
             suppress_warnings=suppress_warnings,
+            termination_grouping_tolerance=termination_grouping_tolerance
         )
 
     @classmethod
@@ -119,6 +121,7 @@ class MolecularSurfaceGenerator(BaseSurfaceGenerator):
         generate_all: bool = True,
         lazy: bool = False,
         suppress_warnings: bool = False,
+        termination_grouping_tolerance: Optional[float] = None
     ) -> SelfMolecularSurfaceGenerator:
         return super().from_file(
             filename=filename,
@@ -131,6 +134,7 @@ class MolecularSurfaceGenerator(BaseSurfaceGenerator):
             generate_all=generate_all,
             lazy=lazy,
             suppress_warnings=suppress_warnings,
+            termination_grouping_tolerance=termination_grouping_tolerance
         )
 
     def _compare_molecules(self, mol_i: Molecule, mol_j: Molecule) -> bool:
