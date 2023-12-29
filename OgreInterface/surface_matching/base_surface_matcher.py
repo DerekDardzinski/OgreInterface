@@ -16,12 +16,20 @@ from sko.tools import set_run_mode
 from tqdm import tqdm
 from ase.data import covalent_radii
 
+from bayes_opt import BayesianOptimization
+from bayes_opt import UtilityFunction
+from bayes_opt import SequentialDomainReductionTransformer
+
 from OgreInterface.interfaces import BaseInterface
 from OgreInterface.surfaces import BaseSurface
 from OgreInterface.surface_matching.base_surface_energy import (
     BaseSurfaceEnergy,
 )
 from OgreInterface import utils
+
+SelfBaseSurfaceMatcher = tp.TypeVar(
+    "SelfBaseSurfaceMatcher", bound="BaseSurfaceMatcher"
+)
 
 
 def _tqdm_run(self, max_iter=None, precision=None, N=20):
@@ -58,9 +66,6 @@ def _tqdm_run(self, max_iter=None, precision=None, N=20):
         self.gbest_y_hist.append(self.gbest_y)
     self.best_x, self.best_y = self.gbest_x, self.gbest_y
     return self.best_x, self.best_y
-
-
-# PSO.run = _tqdm_run
 
 
 class PostInitCaller(type):
@@ -156,7 +161,7 @@ class BaseSurfaceMatcher(ABC, metaclass=CombinedPostInitCaller):
         self.grid_density = grid_density
 
         # Get the matrix used to determine the shifts (smallest surface area)
-        self.shift_matrix = self._get_shift_matrix()
+        self.shift_matrix, self.inv_shift_matrix = self._get_shift_matrix()
 
         # Generate the shifts for the 2D PES
         self.shifts = self._generate_shifts()
@@ -328,37 +333,15 @@ class BaseSurfaceMatcher(ABC, metaclass=CombinedPostInitCaller):
 
         return 2 * max_covalent_radius
 
-    # def _optimizerPSO(self, func, z_bounds, max_iters, n_particles: int = 25):
-    #     set_run_mode(func, mode="vectorization")
-
-    #     if self._verbose:
-    #         print(
-    #             "Running 3D Surface Matching with Particle Swarm Optimization:"
-    #         )
-
-    #     optimizer = PSO(
-    #         func=func,
-    #         pop=n_particles,
-    #         max_iter=max_iters,
-    #         lb=[0.0, 0.0, z_bounds[0]],
-    #         ub=[1.0, 1.0, z_bounds[1]],
-    #         w=0.9,
-    #         c1=0.5,
-    #         c2=0.3,
-    #         verbose=False,
-    #         dim=3,
-    #     )
-    #     optimizer.run()
-    #     cost = optimizer.gbest_y
-    #     pos = optimizer.gbest_x
-
-    #     return cost, pos
-
     def _get_shift_matrix(self) -> np.ndarray:
         if self.interface.substrate.area < self.interface.film.area:
-            return copy.deepcopy(self.sub_obs.lattice.matrix)
+            return copy.deepcopy(self.sub_obs.lattice.matrix), copy.deepcopy(
+                self.sub_obs.lattice.inv_matrix
+            )
         else:
-            return copy.deepcopy(self.film_obs.lattice.matrix)
+            return copy.deepcopy(self.film_obs.lattice.matrix), copy.deepcopy(
+                self.film_obs.lattice.inv_matrix
+            )
 
     def _generate_shifts(self) -> tp.List[np.ndarray]:
         grid_density_x = int(
@@ -1034,6 +1017,44 @@ class BaseSurfaceMatcher(ABC, metaclass=CombinedPostInitCaller):
 
         return opt_E
 
+    def get_adhesion_energy_at_points(
+        self,
+        shifts: np.ndarray,
+        n_batches: int = 20,
+    ):
+        """This function calculates the negated adhesion energy of an interface as a function of the interfacial distance
+
+        Args:
+            interfacial_distances: numpy array of the interfacial distances that should be calculated
+            figsize: Size of the figure in inches (x_size, y_size)
+            fontsize: Fontsize of all the plot labels
+            output: Output file name
+            dpi: Resolution of the figure (dots per inch)
+            save_raw_data_file: If you put a valid file path (i.e. anything ending with .npz) then the
+                raw data will be saved there. It can be loaded in via data = np.load(save_raw_data_file)
+                and the data is: interfacial_distances = data["interfacial_distances"], energies = data["energies"]
+
+        Returns:
+            The optimal value of the negated adhesion energy (smaller is better, negative = stable, positive = unstable)
+        """
+        batch_shifts = np.array_split(shifts, len(shifts) // n_batches, axis=0)
+
+        total_energies = []
+        for batch_shift in batch_shifts:
+            batch_inputs = self.generate_interface_inputs(
+                shifts=batch_shift,
+            )
+            batch_total_energies = self.calculate(inputs=batch_inputs)
+            total_energies.append(batch_total_energies)
+
+        total_energies = np.concatenate(total_energies)
+
+        adhesion_energies = self.get_adhesion_energy(
+            total_energies=total_energies
+        )
+
+        return adhesion_energies
+
     def get_current_energy(
         self,
     ):
@@ -1084,6 +1105,151 @@ class BaseSurfaceMatcher(ABC, metaclass=CombinedPostInitCaller):
         )
 
         return interface_energies
+
+    def _BO_function(
+        self,
+        a_shift: float,
+        b_shift: float,
+        interfacial_distance: float,
+    ) -> float:
+        # Get the cartesian xy shift from the fractional coords
+        # of the smallest surface unit cell
+        cart_xy = self.get_cart_xy_shifts(
+            np.array([a_shift, b_shift]).reshape(1, -1)
+        )
+
+        # Get the shift in the z-directions
+        z_shift = np.array(interfacial_distance - self.d_interface).reshape(
+            1, -1
+        )
+
+        # Concatenate the shift array
+        shifts = np.c_[cart_xy, z_shift]
+
+        inputs = self.generate_interface_inputs(shifts=shifts)
+
+        total_energies = self.calculate(inputs=inputs)
+
+        adhesion_energies = self.get_adhesion_energy(
+            total_energies=total_energies
+        )
+
+        return -adhesion_energies[0]
+
+    def _get_probe_shifts(
+        self,
+        z_bounds: tp.List[float],
+    ):
+        cart_PES_shifts = self.shifts.reshape(-1, 3)
+        frac_PES_shifts = cart_PES_shifts.dot(self.inv_shift_matrix)
+
+        z_vals = np.linspace(z_bounds[0], z_bounds[1], 10)
+
+        cart_shifts = []
+        frac_dist_shifts = []
+
+        for z in z_vals:
+            cart_shifts.append(
+                cart_PES_shifts + np.array([0.0, 0.0, z - self.d_interface])
+            )
+            frac_dist_shifts.append(frac_PES_shifts + np.array([0.0, 0.0, z]))
+
+        cart_shifts = np.vstack(cart_shifts)
+        frac_dist_shifts = np.vstack(frac_dist_shifts)
+
+        return cart_shifts, frac_dist_shifts
+
+    def optimizeBO(
+        self,
+        z_bounds: tp.Optional[tp.List[float]] = None,
+        max_iters: int = 50,
+        probe_function: tp.Optional[SelfBaseSurfaceMatcher] = None,
+        probe_function_kwargs: tp.Dict[str, tp.Any] = {},
+    ):
+        if z_bounds is None:
+            max_z = self._get_max_z()
+            z_bounds = [0.5, max(3.5, 1.2 * max_z)]
+
+        optimizer = BayesianOptimization(
+            f=self._BO_function,
+            pbounds={
+                "a_shift": (0, 1),
+                "b_shift": (0, 1),
+                "interfacial_distance": tuple(z_bounds),
+            },
+            verbose=2,
+            allow_duplicate_points=True,
+            bounds_transformer=SequentialDomainReductionTransformer(
+                minimum_window=0.1
+            ),
+        )
+
+        utility_function = UtilityFunction(
+            kind="ei",
+            xi=1e-4,
+            kappa=1.576,
+            kappa_decay=0.99,
+            kappa_decay_delay=10,
+        )
+
+        if probe_function is not None:
+            print("Running Probe Function:")
+            probe_surface_matcher = probe_function(
+                interface=self.interface,
+                grid_density=self.grid_density,
+                verbose=False,
+            )
+
+            cart_shifts, input_shifts = self._get_probe_shifts(
+                z_bounds=z_bounds,
+            )
+
+            print(cart_shifts.shape)
+            print(input_shifts)
+
+            probed_adhesion_energies = (
+                probe_surface_matcher.get_adhesion_energy_at_points(
+                    cart_shifts,
+                    n_batches=min(self.X_shape) * 10,
+                )
+            )
+
+            print("Finished Probing")
+
+            print("Registering Probed Points:")
+            for input, energy in zip(input_shifts, probed_adhesion_energies):
+                params = {
+                    "a_shift": input[0],
+                    "b_shift": input[1],
+                    "interfacial_distance": input[2],
+                }
+                optimizer.register(params=params, target=-energy)
+
+            print("Finished Registering:")
+
+        optimizer.maximize(
+            init_points=0,
+            n_iter=max_iters,
+            acquisition_function=utility_function,
+        )
+
+        X, Y, Z = np.meshgrid(
+            np.linspace(0, 1, 101),
+            np.linspace(0, 1, 101),
+            np.linspace(z_bounds[0], z_bounds[1], 51),
+        )
+
+        print(optimizer.max)
+
+        # grid = np.c_[X.ravel(), Y.ravel(), Z.ravel()]
+
+        # output = optimizer._gp.predict(grid)
+
+        # max_ind = np.argmax(output)
+
+        # opt_shift = grid[max_ind]
+
+        # print(opt_shift)
 
     def optimizePSO(
         self,
