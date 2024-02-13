@@ -493,7 +493,7 @@ class Interface(BaseInterface):
             if relax:
                 poscar.selective_dynamics = to_relax
 
-            poscar_str = poscar.get_string()
+            poscar_str = poscar.get_str()
 
         else:
             syms = [site.specie.symbol for site in slab]
