@@ -47,8 +47,9 @@ interface_generator = InterfaceGenerator(
     max_strain=0.01,
     max_area_mismatch=0.01,
     max_area=200,
-    interfacial_distance=2.0,
-    vacuum=40,
+    interfacial_distance=4.0,
+    vacuum=20,
+    center=True,
 )
 
 # Generate the interfaces
