@@ -177,7 +177,7 @@ class Surface(BaseSurface):
         comment = self._get_base_poscar_comment_str(orthogonal=orthogonal)
 
         if not self._passivated:
-            poscar_str = Poscar(slab, comment=comment).get_string()
+            poscar_str = Poscar(slab, comment=comment).get_str()
         else:
             if relax:
                 atomic_numbers = np.array(slab.atomic_numbers)
@@ -231,7 +231,7 @@ class Surface(BaseSurface):
             if relax:
                 poscar.selective_dynamics = selective_dynamics
 
-            poscar_str = poscar.get_string().split("\n")
+            poscar_str = poscar.get_str().split("\n")
             poscar_str[5] = " ".join(new_atom_types)
             poscar_str[6] = " ".join(list(map(str, n_atoms)))
             poscar_str = "\n".join(poscar_str)
