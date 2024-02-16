@@ -9,11 +9,9 @@ ms = MillerSearch(
     film="./poscars/POSCAR_Al_conv",
     max_film_index=2,
     max_substrate_index=2,
-    max_linear_strain=0.01,
-    max_angle_strain=0.01,
+    max_strain=0.01,
     max_area_mismatch=0.01,
-    max_area=200,
-    convert_to_conventional=True,
+    max_area=200
 )
 ms.run_scan()
 ms.plot_misfits(fontsize=14, labelrotation=-20, figure_scale=1)
@@ -35,8 +33,8 @@ films = SurfaceGenerator.from_file(
 )
 
 # Select which Surface you want from the list of Surface's
-sub = subs.slabs[0]
-film = films.slabs[0]
+sub = subs._slabs[0]
+film = films._slabs[0]
 
 # Optional way to remove layers from the substrate or film (Usefull for complete control of termination)
 #  sub.remove_layers(num_layers=3, top=False)
@@ -46,12 +44,12 @@ film = films.slabs[0]
 interface_generator = InterfaceGenerator(
     substrate=sub,
     film=film,
-    max_linear_strain=0.01,
-    max_angle_strain=0.01,
+    max_strain=0.01,
     max_area_mismatch=0.01,
     max_area=200,
-    interfacial_distance=2.0,
-    vacuum=40,
+    interfacial_distance=4.0,
+    vacuum=20,
+    center=True,
 )
 
 # Generate the interfaces
