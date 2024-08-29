@@ -1,6 +1,6 @@
 import argparse
 from copy import deepcopy
-from itertools import combinations, groupby
+from itertools import combinations
 import math
 import os
 import sys
@@ -11,7 +11,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
 
-from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib.colors import Colormap
 
 from pymatgen.analysis.graphs import StructureGraph
@@ -19,7 +18,6 @@ from pymatgen.analysis.local_env import JmolNN
 from pymatgen.core.lattice import Lattice
 from pymatgen.core.sites import PeriodicSite
 from pymatgen.core.structure import Molecule, Structure
-from pymatgen.transformations.site_transformations import TranslateSitesTransformation
 from pymatgen.transformations.standard_transformations import RotationTransformation
 from scipy.spatial.distance import pdist, squareform
 from scipy.cluster.hierarchy import fcluster, linkage
@@ -840,6 +838,226 @@ class SurfaceCell:
         y_bounds = [by, 0] if by < 0 else [0, by]
         z_bounds = [0, self._height]
         return np.vstack((x_bounds, y_bounds, z_bounds))
+
+
+class SurfaceVoxels:
+    def __init__(
+        self,
+        unit_cell: Structure,
+        attrv_adj: float = 0.0,
+        precision: int = 26,
+        scan_step: float = 0.1,
+        delta_z: float = 0.0,
+        molecule_width: float = None,
+        atom_count: int = None,
+    ) -> None:
+        self._unit_cell = unit_cell.copy()
+        self._attrv_adj = attrv_adj
+        self._precision = precision
+        self._scan_step = scan_step
+        self._molecule_width, self._atom_count = self._molecule_data(
+            molecule_width=molecule_width, atom_count=atom_count
+        )
+        self._delta_z = delta_z if delta_z != 0.0 else self._molecule_width
+
+        self._surface_normal = self._calc_surface_normal()
+        start_timer("SurfaceVoxels.surface_cell")
+        self._surface_cell = SurfaceCell(
+            original_cell=self.unit_cell,
+            surface_normal=self.surface_normal,
+            molecule_width=self.molecule_width,
+            atom_count=self._atom_count,
+        )
+        self._bounds = self._surface_cell.bounds
+        stop_timer("SurfaceVoxels.surface_cell")
+        start_timer("SurfaceVoxels._voxelize()")
+        self._voxel_surface, self._masked_points = self._voxelize()
+        stop_timer("SurfaceVoxels._voxelize()")
+        start_timer("SurfaceVoxels._roughnesses()")
+        self._roughnesses = self._calc_roughnesses()
+        self._average_roughness = self._calc_average_roughness()
+        stop_timer("SurfaceVoxels._roughnesses()")
+
+    def _molecule_data(
+        self, molecule_width: float = None, atom_count: int = None
+    ) -> Tuple[float, int]:
+        if molecule_width is None:
+            if atom_count is None:
+                return molecule_data(structure=self._unit_cell)
+            return molecular_width(structure=self._unit_cell), atom_count
+        return molecule_width, count_atoms(structure=self._unit_cell)
+
+    @property
+    def atom_count(self) -> int:
+        return self._atom_count
+
+    @property
+    def unit_cell(self) -> Structure:
+        return self._unit_cell.copy()
+
+    @property
+    def attrv_adj(self) -> float:
+        return self._attrv_adj
+
+    @property
+    def precision(self) -> int:
+        return self._precision
+
+    @property
+    def scan_step(self) -> float:
+        return self._scan_step
+
+    @property
+    def molecule_width(self) -> float:
+        return self._molecule_width
+
+    @property
+    def delta_z(self) -> float:
+        return self._delta_z
+
+    @property
+    def surface_normal(self) -> np.ndarray:
+        return self._surface_normal.copy()
+
+    @property
+    def surface_cell(self) -> SurfaceCell:
+        return deepcopy(self._surface_cell)
+
+    @property
+    def bounds(self) -> np.ndarray:
+        return self._bounds.copy()
+
+    @property
+    def voxel_surface(self) -> np.ndarray:
+        return self._voxel_surface.copy()
+
+    @property
+    def masked_points(self) -> np.ndarray:
+        return self._masked_points.copy()
+
+    @property
+    def roughnesses(self) -> np.ndarray:
+        return self._roughnesses.copy()
+
+    @property
+    def average_roughness(self) -> float:
+        return self._average_roughness
+
+    def _calc_surface_normal(self) -> np.ndarray:
+        a, b, _ = self._unit_cell.lattice.matrix
+        return normalize(np.cross(normalize(a), normalize(b)))
+
+    def _voxelize(self) -> Tuple[np.ndarray, np.ndarray]:
+        max_z = self._bounds[2, 1]
+
+        target_sites = [
+            site
+            for site in self._surface_cell.structure
+            if max_z - site.coords[-1] - site.specie.van_der_waals_radius < self._delta_z
+        ]
+
+        xi = np.arange(self._bounds[0, 0], self._bounds[0, 1], self._scan_step)
+        yi = np.arange(self._bounds[1, 0], self._bounds[1, 1], self._scan_step)
+        zi = np.arange(self._bounds[2, 0], self._bounds[2, 1], self._scan_step)
+
+        xn = len(xi)
+        yn = len(yi)
+        zn = len(zi)
+
+        voxel_array = np.zeros((xn, yn, zn))
+
+        thetas = np.linspace(0.0, math.pi / 2, self._precision)
+        phis_template = np.linspace(0.0, math.pi * 2, 4 * self._precision)
+
+        for site in tqdm(target_sites, desc="Voxelizing sites..."):
+            x, y, z = site.coords
+            rad = site.specie.van_der_waals_radius + self._attrv_adj
+
+            for theta in thetas:
+                z_i = int((z + rad * np.cos(theta) - self._bounds[2, 0]) / self._scan_step) - 1
+                if z_i < 0 or z_i > zn:
+                    break
+
+                sin_theta = np.sin(theta)
+                phis = phis_template[: len(thetas) * 4]
+                sin_phis = np.sin(phis)
+                cos_phis = np.cos(phis)
+
+                for cos_phi, sin_phi in zip(cos_phis, sin_phis):
+                    x_i = (
+                        int((x + rad * sin_theta * cos_phi - self._bounds[0, 0]) / self._scan_step)
+                        - 1
+                    )
+                    y_i = (
+                        int((y + rad * sin_theta * sin_phi - self._bounds[1, 0]) / self._scan_step)
+                        - 1
+                    )
+
+                    if 0 <= x_i < xn and 0 <= y_i < yn:
+                        voxel_array[x_i, y_i, z_i] = 1
+
+        voxel_surface = np.zeros((xn, yn))
+        points = []
+        for x_index in range(xn):
+            x_coord = x_index * self._scan_step
+            for y_index in range(yn):
+                true_z_indices = np.where(voxel_array[x_index, y_index, :] == 1)[0]
+                depth = min([max_z - true_z_indices[-1] * self._scan_step, self._delta_z]) if len(true_z_indices) > 0 else self._delta_z
+                voxel_surface[x_index, y_index] = depth
+                points.append([x_coord, y_index * self._scan_step, depth])
+
+        if len(points) == 0:
+            sys.stdout.write("\nThere are no occupied points!\n\n")
+
+        return voxel_surface, np.array(points).T
+
+    def _calc_roughnesses(self) -> np.ndarray:
+        """Compute roughnesses from masked voxel surface heights"""
+        return self._masked_points[-1]
+
+    def _calc_average_roughness(self) -> float:
+        return np.mean(self._roughnesses)
+
+    def visualize(self, save_to: str = "", cmap: Union[str, Colormap] = "viridis") -> None:
+        fig, ax = plt.subplots()
+        im = ax.imshow(
+            self._voxel_surface.T,
+            origin="lower",
+            extent=(
+                self._bounds[0][0],
+                self._bounds[0][1],
+                self._bounds[1][0],
+                self._bounds[1][1],
+            ),
+            cmap=cmap,
+            interpolation="nearest",
+            aspect="equal",
+            vmax=self._delta_z
+        )
+
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        cbar = plt.colorbar(im, cax=cax)
+        cbar.set_label("Surface Depth ($\AA$)", fontsize=16, fontweight="bold", rotation=90.0)
+        ax.set_xlabel("x-Coordinate ($\AA$)", fontsize=16, fontweight="bold")
+        ax.set_ylabel("y-Coordinate ($\AA$)", fontsize=16, fontweight="bold", rotation=90.0)
+        ax.set_title("Surface Depth Map", fontsize=20, fontweight="bold")
+        cbar_tick_labels = cbar.ax.get_yticklabels()
+        for label in cbar_tick_labels:
+            label.set_fontsize(12)
+            label.set_fontweight("bold")
+        xticklabels = ax.get_xticklabels()
+        yticklabels = ax.get_yticklabels()
+        for label in xticklabels:
+            label.set_fontsize(12)
+            label.set_fontweight("bold")
+        for label in yticklabels:
+            label.set_fontsize(12)
+            label.set_fontweight("bold")
+
+        if save_to:
+            plt.savefig(save_to)
+        plt.close()
 
 
 class Termination:
