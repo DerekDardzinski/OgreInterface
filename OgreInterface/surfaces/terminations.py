@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
 
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib.colors import Colormap
 
 from pymatgen.analysis.graphs import StructureGraph
