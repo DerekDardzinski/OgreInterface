@@ -4,24 +4,22 @@ from itertools import combinations
 import math
 import os
 import sys
-from typing import Dict, List, Tuple, TypeVar, Union
 from tqdm import tqdm
+from typing import Dict, List, Tuple, TypeVar, Union
 
-import numpy as np
-import matplotlib.pyplot as plt
 import networkx as nx
-
-from mpl_toolkits.axes_grid1 import make_axes_locatable
+import numpy as np
 from matplotlib.colors import Colormap
-
+import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 from pymatgen.analysis.graphs import StructureGraph
 from pymatgen.analysis.local_env import JmolNN
 from pymatgen.core.lattice import Lattice
 from pymatgen.core.sites import PeriodicSite
 from pymatgen.core.structure import Molecule, Structure
 from pymatgen.transformations.standard_transformations import RotationTransformation
-from scipy.spatial.distance import pdist, squareform
 from scipy.cluster.hierarchy import fcluster, linkage
+from scipy.spatial.distance import pdist, squareform
 
 from OgreInterface.surfaces.surface import Surface
 from OgreInterface.surfaces.molecular_surface import MolecularSurface
@@ -32,9 +30,6 @@ from OgreInterface.utils import (
     sort_slab,
     get_layer_supercell,
 )
-
-import inspect
-import time
 
 SelfSurfacePrism = TypeVar("SelfSurfacePrism", bound="SurfacePrism")
 
@@ -472,7 +467,7 @@ class SurfaceCell:
         original_cell: Structure,
         surface_normal: np.ndarray = None,
         molecule_width: float = None,
-        atom_count: int = None,
+        molecular: bool = True,
     ) -> None:
         """_summary_
 
@@ -482,7 +477,6 @@ class SurfaceCell:
         Keyword Arguments:
             surface_normal -- _description_ (default: {None})
             molecule_width -- _description_ (default: {None})
-            atom_count -- _description_ (default: {None})
         """
         self._original_cell = Structure(
             lattice=deepcopy(original_cell.lattice),
@@ -494,42 +488,18 @@ class SurfaceCell:
         self._surface_normal = (
             surface_normal.copy() if not surface_normal is None else self._calc_surface_normal()
         )
-        self._molecule_width, self._atom_count = self._molecule_data(
-            molecule_width=molecule_width, atom_count=atom_count
+        self._molecular = molecular
+        self._molecule_width = (
+            molecular_width(structure=self._original_cell)
+            if (molecule_width is None and self._molecular)
+            else molecule_width
         )
         self._unit_height = self._original_cell.lattice.matrix[-1] @ self._surface_normal
-        self._c_scale = math.ceil(self._molecule_width / self._unit_height)
+        self._c_scale = math.ceil(self._molecule_width / self._unit_height) if molecular else 1
         self._structure, self._height = self._derive_structure()
         self._bounds = self._calc_bounds()
         if debug:
             self._structure.to(os.path.join(os.getcwd(), "buffered_structure.cif"))
-
-    def _molecule_data(
-        self, molecule_width: float = None, atom_count: int = None
-    ) -> Tuple[float, int]:
-        """_summary_
-
-        Keyword Arguments:
-            molecule_width -- _description_ (default: {None})
-            atom_count -- _description_ (default: {None})
-
-        Returns:
-            _description_
-        """
-        if molecule_width is None:
-            if atom_count is None:
-                return molecule_data(structure=self._original_cell)
-            return molecular_width(structure=self._original_cell), atom_count
-        return molecule_width, count_atoms(structure=self._original_cell)
-
-    @property
-    def atom_count(self) -> int:
-        """_summary_
-
-        Returns:
-            _description_
-        """
-        return self._atom_count
 
     @property
     def original_cell(self) -> Structure:
@@ -548,6 +518,10 @@ class SurfaceCell:
             _description_
         """
         return self._surface_normal.copy()
+
+    @property
+    def molecular(self) -> bool:
+        return self._molecular
 
     @property
     def molecule_width(self) -> float:
@@ -619,10 +593,7 @@ class SurfaceCell:
             _description_
         """
         coords_to_keep, species_to_keep, max_head = [], [], 0.0
-        start_timer("molecule_graphs")
         mol_graphs = get_molecule_graphs(structure=self._original_cell)
-        stop_timer("molecule_graphs")
-        start_timer("slug planing")
         for mol_graph in mol_graphs:  # get_molecule_graphs(supercell_slug):
             keep_molecule, local_max_head = True, 0.0
 
@@ -691,8 +662,8 @@ class SurfaceCell:
                         species_to_keep.append(site.specie)
                     else:
                         underground_atoms_removed += 1
-        if molecules_removed > 0 or underground_atoms_removed > 0:
-            sys.stdout.write(" (!!!)\n")
+        #if molecules_removed > 0 or underground_atoms_removed > 0:
+        #    sys.stdout.write(" (!!!)\n")
 
         # Create the structure
         planed_slug = Structure(
@@ -821,7 +792,6 @@ class SurfaceCell:
         buffered_prism = SurfacePrism.from_matrix(planed_slug.lattice.matrix, self._surface_normal)
         planed_slug.make_supercell([3, 3, 1], to_unit_cell=True, in_place=True)
         buffered_prism.buffer_mask_supercell(planed_slug, in_place=True)
-        counter["count"] += 1
         return planed_slug, max_head
 
     def _calc_bounds(self) -> np.ndarray:
@@ -850,47 +820,40 @@ class SurfaceVoxels:
         scan_step: float = 0.1,
         delta_z: float = 0.0,
         molecule_width: float = None,
-        atom_count: int = None,
+        molecular: bool = True,
     ) -> None:
         self._unit_cell = unit_cell.copy()
         self._attrv_adj = attrv_adj
         self._precision = precision
         self._scan_step = scan_step
-        self._molecule_width, self._atom_count = self._molecule_data(
-            molecule_width=molecule_width, atom_count=atom_count
+        self._molecular = molecular
+        self._molecule_width = (
+            molecular_width(structure=self._unit_cell)
+            if (molecule_width is None and self._molecular)
+            else molecule_width
         )
-        self._delta_z = delta_z if delta_z != 0.0 else self._molecule_width
 
         self._surface_normal = self._calc_surface_normal()
-        start_timer("SurfaceVoxels.surface_cell")
+        z = (
+            self._molecule_width
+            if self._molecular
+            else self._unit_cell.lattice.matrix[-1] @ self._surface_normal
+        )
+        self._delta_z = delta_z if delta_z != 0.0 else z
         self._surface_cell = SurfaceCell(
             original_cell=self.unit_cell,
             surface_normal=self.surface_normal,
             molecule_width=self.molecule_width,
-            atom_count=self._atom_count,
+            molecular=self.molecular,
         )
         self._bounds = self._surface_cell.bounds
-        stop_timer("SurfaceVoxels.surface_cell")
-        start_timer("SurfaceVoxels._voxelize()")
         self._voxel_surface, self._masked_points = self._voxelize()
-        stop_timer("SurfaceVoxels._voxelize()")
-        start_timer("SurfaceVoxels._roughnesses()")
         self._roughnesses = self._calc_roughnesses()
         self._average_roughness = self._calc_average_roughness()
-        stop_timer("SurfaceVoxels._roughnesses()")
-
-    def _molecule_data(
-        self, molecule_width: float = None, atom_count: int = None
-    ) -> Tuple[float, int]:
-        if molecule_width is None:
-            if atom_count is None:
-                return molecule_data(structure=self._unit_cell)
-            return molecular_width(structure=self._unit_cell), atom_count
-        return molecule_width, count_atoms(structure=self._unit_cell)
 
     @property
-    def atom_count(self) -> int:
-        return self._atom_count
+    def molecular(self) -> bool:
+        return self._molecular
 
     @property
     def unit_cell(self) -> Structure:
@@ -1003,7 +966,11 @@ class SurfaceVoxels:
             x_coord = x_index * self._scan_step
             for y_index in range(yn):
                 true_z_indices = np.where(voxel_array[x_index, y_index, :] == 1)[0]
-                depth = min([max_z - true_z_indices[-1] * self._scan_step, self._delta_z]) if len(true_z_indices) > 0 else self._delta_z
+                depth = (
+                    min([max_z - true_z_indices[-1] * self._scan_step, self._delta_z])
+                    if len(true_z_indices) > 0
+                    else self._delta_z
+                )
                 voxel_surface[x_index, y_index] = depth
                 points.append([x_coord, y_index * self._scan_step, depth])
 
@@ -1033,7 +1000,7 @@ class SurfaceVoxels:
             cmap=cmap,
             interpolation="nearest",
             aspect="equal",
-            vmax=self._delta_z
+            vmax=self._delta_z,
         )
 
         divider = make_axes_locatable(ax)
@@ -1365,14 +1332,12 @@ class Terminator:
         molecular: bool = True,
         generate_all: bool = True,
         molecule_width: float = None,
-        atom_count: int = None,
         terminations: List[Termination] = None,
         num_layers: int = None,
         vacuum: float = 60.0,
     ) -> None:
         self._bulk = bulk
         self._plane = plane
-        plane_counter["plane"] = miller_name(plane)
         self._obs = OrientedBulk(bulk=bulk, miller_index=plane, make_planar=False)
 
         self._clustering_tolerance_scale = clustering_tolerance_scale
@@ -1381,15 +1346,17 @@ class Terminator:
         self._precision = precision
         self._scan_step = scan_step
 
-        self._molecule_width, self._atom_count = self._molecule_data(
-            molecule_width=molecule_width, atom_count=atom_count
+        self._molecular = molecular
+        self._molecule_width = (
+            molecular_width(structure=self._bulk)
+            if (molecule_width is None and self._molecular)
+            else molecule_width
         )
-        self._delta_z = delta_z if delta_z <= 0.0 else self._molecule_width
+        self._delta_z = delta_z if delta_z <= 0.0 else 0.0
 
         self.out_dir = out_dir
         self.species = species
         self._plane_name = miller_name(plane)
-        self.molecular = molecular
 
         self.generate_all = generate_all
         self.num_layers = 1 if num_layers is None else num_layers
@@ -1399,15 +1366,9 @@ class Terminator:
         self._unrotation_transformations = self._calc_unrotation_transformations()
 
         self._dummy_obs, self._raw_altitudes, self._clustering_tolerance = self._make_dummy_obs()
-        start_timer("Terminator._calculate_possible_shifts()")
         self._shifts = self._calc_shifts()
-        stop_timer("Terminator._calculate_possible_shifts()")
-        start_timer("Terminator._apply_possible_shifts()")
         self._shifted_dummy_obses, self._surfaces = self._apply_shifts()
-        stop_timer("Terminator._apply_possible_shifts()")
-        start_timer("Terminator._undummify()")
         self._shifted_cells = self._undummify()
-        stop_timer("Terminator._undummify()")
 
         self._surface_voxels = None
         self._average_roughnesses = None
@@ -1416,18 +1377,9 @@ class Terminator:
         )
         self._smoothest_surface = None
 
-    def _molecule_data(
-        self, molecule_width: float = None, atom_count: int = None
-    ) -> Tuple[float, int]:
-        if molecule_width is None:
-            if atom_count is None:
-                return molecule_data(structure=self._bulk)
-            return molecular_width(structure=self._bulk), atom_count
-        return molecule_width, count_atoms(structure=self._bulk)
-
     @property
-    def atom_count(self) -> int:
-        return self._atom_count
+    def molecular(self) -> bool:
+        return self._molecular
 
     @property
     def bulk(self) -> Structure:
@@ -1709,7 +1661,6 @@ class Terminator:
         return u1, u2
 
     def _make_dummy_obs(self) -> Tuple[OrientedBulk, List[float], float]:
-        start_timer("Terminator._make_dummy_obs()")
         # Rotate the OBS
         structure = self._rotated_obs
 
@@ -2183,7 +2134,7 @@ class Terminator:
                     scan_step=self._scan_step,
                     delta_z=self._delta_z,
                     molecule_width=self._molecule_width,
-                    atom_count=self._atom_count,
+                    molecular=self.molecular,
                 )
             )
 
@@ -2222,8 +2173,8 @@ class Terminator:
                     smoothest=smoothest,
                 )
             if smoothest:
-                print(len(self._surfaces))
-                print(len(self._terminations))
+                # print(len(self._surfaces))
+                # print(len(self._terminations))
                 self._smoothest_surface = self._surfaces[i]
 
         return average_roughnesses
@@ -2295,36 +2246,6 @@ def print_structure(structure, name):
     structure.to(os.path.join(os.getcwd(), f"{name}.cif"))
 
 
-def start_timer(timer_name):
-    """Start a timer with a given name."""
-    timers[timer_name] = time.time()
-
-
-def stop_timer(timer_name):
-    """Stop a timer with a given name and print the elapsed time."""
-    if timer_name in timers:
-        start_time = timers.pop(timer_name)
-        elapsed_time = time.time() - start_time
-        print(f"\tTimer '{timer_name}' elapsed time: {elapsed_time:.2f} seconds")
-        if not timer_name in times.keys():
-            times[timer_name] = [elapsed_time]
-        else:
-            times[timer_name].append(elapsed_time)
-            if len(times[timer_name]) % 4 == 0:
-                time_strings = [f"{elapsed:.2f}" for elapsed in times[timer_name]]
-                print(f"\tTimer '{timer_name}' elapsed times: {time_strings}")
-    else:
-        print(f"\tTimer '{timer_name}' was not started")
-
-
-def caller_line_number():
-    result = ""
-    stack = inspect.stack()
-    for i in range(len(stack) - 1, 0, -1):
-        result += f"{stack[i].lineno}:"
-    return result
-
-
 def compare_molecules(mol_i: Molecule, mol_j: Molecule) -> bool:
     # Check if they are the same length
     if len(mol_i) == len(mol_j):
@@ -2394,30 +2315,6 @@ def wrap_frac(frac_coord: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
     )
 
 
-def wrapped_z(site: PeriodicSite, structure: Structure) -> float:
-    """
-    Wrap the z-coordinate of a site back into the unit cell via periodic boundary conditions.
-
-    Parameters:
-    site (PeriodicSite): A site in the pymatgen structure.
-    structure (Structure): A pymatgen structure containing the site.
-
-    Returns:
-    float: Wrapped z-coordinate.
-    """
-    # Get fractional coordinates of the site
-    frac_coords = site.frac_coords
-
-    # Wrap the fractional coordinates
-    wrapped_frac_coords = frac_coords % 1.0
-
-    # Convert back to Cartesian coordinates
-    wrapped_cartesian_coords = structure.lattice.get_cartesian_coords(wrapped_frac_coords)
-
-    # Return the wrapped z-coordinate
-    return wrapped_cartesian_coords[2]
-
-
 def find_rotation_matrix(
     orig_v: np.ndarray, dest_v: Union[np.ndarray, str]
 ) -> Tuple[np.ndarray, float]:
@@ -2446,51 +2343,11 @@ def find_rotation_matrix(
     return rot_axis, rot_angle
 
 
-def plane_from_name(plane_name: str) -> List[int]:
-    miller_index = []
-    i = 0
-    while i < len(plane_name):
-        if plane_name[i] == "-":
-            miller_index.append(int(plane_name[i : i + 2]))
-            i += 1
-        else:
-            miller_index.append(int(plane_name[i]))
-        i += 1
-    return miller_index
-
-
 def miller_name(miller_index: List[int]) -> str:
     name = ""
     for hkl in miller_index:
         name += str(hkl)
     return name
-
-
-def count_atoms(structure: Structure) -> int:
-    return max([len(list(graph.nodes())) for graph in get_molecule_graphs(structure)])
-
-
-def molecule_data(structure: Structure) -> Tuple[float, int]:
-    mol_graphs = get_molecule_graphs(structure)
-    atom_counts = []
-    molecules = []
-    for graph in mol_graphs:
-        atom_indices = list(graph.nodes())
-        atom_counts.append(len(atom_indices))
-        species = [structure[i].specie for i in atom_indices]
-        coords = [structure[i].coords for i in atom_indices]
-        molecules.append(Molecule(species, coords))
-
-    width = max(
-        [
-            squareform(pdist([site.coords for site in molecule.sites])).max()
-            for molecule in molecules
-        ]
-    )
-
-    atom_count = max(atom_counts)
-
-    return width, atom_count
 
 
 def molecular_width(structure: Structure) -> float:
@@ -2561,53 +2418,6 @@ def get_molecule_graphs(structure: Structure) -> List[nx.Graph]:
     return [cell_graph.subgraph(c) for c in nx.connected_components(cell_graph)]
 
 
-def compute_maximum_width(structure: Structure) -> float:
-    max_distance = 0.0
-    jmol_nn = JmolNN()
-    struc = structure.copy().get_supercell([3, 3, 3])
-
-    # Loop through each site in the structure
-    for i, site_i in enumerate(struc):
-        visited = set()
-        stack = [i]
-        site_stack = [site_i]
-
-        while stack:
-            current_i = stack.pop()
-            current_site = site_stack.pop()
-            if current_site not in visited:
-                visited.add(current_site)
-
-                # Get neighbor information using JmolNN
-                neighbors_info = jmol_nn.get_nn_info(struc, current_i)
-
-                for neighbor_info in neighbors_info:
-                    neighbor_site = neighbor_info["site"]
-
-                    if neighbor_site not in visited:  # and neighbor_site in structure:
-
-                        neighbor_i = next(
-                            (
-                                idx
-                                for idx, s in enumerate(struc)
-                                if s.is_periodic_image(neighbor_site)
-                            ),
-                            None,
-                        )
-                        if not neighbor_i is None:
-                            site_stack.append(neighbor_site)
-                            stack.append(neighbor_i)
-
-                            # Calculate distance between current_site and neighbor_site
-                            distance = structure.get_distance(current_i, neighbor_i)
-                            if distance > max_distance:
-                                max_distance = distance
-                        else:
-                            sys.stdout.write("\n\n\nsite not found :(\n\n\n")
-
-    return max_distance
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Find surface terminations for a given surface.")
     parser.add_argument(
@@ -2672,7 +2482,7 @@ if __name__ == "__main__":
     bulk = Structure.from_file(os.path.join(os.getcwd(), args.bulk_path))
     species = os.path.basename(args.bulk_path).split(".")[0]
 
-    molecule_width, atom_count = molecule_data(bulk)
+    molecule_width = molecular_width(bulk)
     sys.stdout.write(f"\n\n\n{molecule_width=}\n\n\n")
 
     max_index = 2 if "TETCEN" in species else 1
