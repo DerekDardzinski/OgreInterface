@@ -390,7 +390,8 @@ def get_unique_miller_indices(
                 equiv_plane = tuple(equiv_plane)
 
                 # Append the equivalent plane to the dictionary
-                planes_dict[plane].append(equiv_plane)
+                if (np.abs(equiv_plane) <= max_index).all():
+                    planes_dict[plane].append(equiv_plane)
 
                 # If the equivalent plane is not equal to the initial plane
                 # and the equivalent plane is still in the planes_dict keys
